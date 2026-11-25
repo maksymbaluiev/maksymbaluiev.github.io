@@ -71,14 +71,26 @@ const rows = [
     <div class="media">
       {images.map((img, i) => (
         <figure>
-          <Picture
-            src={img.src}
-            alt={img.alt}
-            formats={['avif', 'webp']}
-            widths={[640, 960, 1280, 1600, 2000, 2400, 3200, 4800]}
-            sizes="(min-width: 1024px) 66vw, calc(100vw - 2.25rem)"
-            loading={i === 0 ? 'eager' : 'lazy'}
-          />
+          {img.src.format === 'gif' ? (
+            /* GIF показуємо як є, щоб не зламати анімацію */
+            <img
+              src={img.src.src}
+              alt={img.alt}
+              width={img.src.width}
+              height={img.src.height}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          ) : (
+            <Picture
+              src={img.src}
+              alt={img.alt}
+              formats={['avif', 'webp']}
+              widths={[640, 960, 1280, 1600, 2000, 2400, 3200, 3840]}
+              sizes="(min-width: 1024px) 66vw, calc(100vw - 2.25rem)"
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          )}
         </figure>
       ))}
     </div>
