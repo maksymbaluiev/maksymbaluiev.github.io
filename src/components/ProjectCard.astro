@@ -16,6 +16,8 @@ const num = String(index + 1).padStart(2, '0');
 
 <article class="card">
   <a href={`/work/${project.id}/`} class="link">
+    <!-- Підпис над картинкою: [01] Назва, тим самим розміром, що й меню -->
+    <h2 class="title"><span class="num">[{num}]</span> {project.data.title}</h2>
     <div class="media">
       <Picture
         src={cover.src}
@@ -27,16 +29,13 @@ const num = String(index + 1).padStart(2, '0');
         fetchpriority={index === 0 ? 'high' : 'auto'}
       />
     </div>
-    <div class="meta">
-      <h2 class="title">{project.data.title}</h2>
-      <span class="num" aria-hidden="true">{num}</span>
-    </div>
   </a>
-  {project.data.services.length > 0 && <p class="label">{project.data.services.join(', ')}</p>}
 </article>
 
 <style>
   .link { display: block; text-decoration: none; }
+  .title { margin-bottom: var(--space-3xs); }
+  .link:hover .title { color: var(--color-text-muted); }
   .media {
     aspect-ratio: 4 / 3;
     overflow: hidden;
@@ -50,14 +49,4 @@ const num = String(index + 1).padStart(2, '0');
     transition: transform calc(var(--duration) * 2) var(--ease);
   }
   .link:hover .media :global(img) { transform: scale(1.02); }
-  .meta {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-xs);
-    margin-top: var(--space-2xs);
-  }
-  .title { font-size: var(--step-0); }
-  .num { font-size: var(--step--1); color: var(--color-text-muted); font-family: var(--font-mono); }
-  .link:hover .title { color: var(--color-text-muted); }
-  .label { margin-top: var(--space-3xs); }
 </style>
