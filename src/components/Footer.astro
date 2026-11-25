@@ -7,8 +7,7 @@ const year = new Date().getFullYear();
 <!-- Підвал: пункти стоять по колонках сітки (12 на десктопі, 2 на телефоні) -->
 <footer class="site-footer cols">
   <ul role="list" class="items">
-    <li>©{year}</li>
-    <li>Privacy Policy</li>
+    <li class="legal">©{year}<br />Privacy Policy</li>
     {social.map((s) => (
       <li><a href={s.url} target="_blank" rel="me noopener noreferrer">{s.label}</a></li>
     ))}
@@ -27,13 +26,17 @@ const year = new Date().getFullYear();
     grid-template-columns: subgrid;
     row-gap: var(--space-3xs);
   }
-  li { grid-column: span 1; }
+  /* Телефон: ©/Privacy Policy зліва, соцмережі стовпчиком справа */
+  .legal { grid-column: 1; grid-row: 1 / span 4; }
+  li:not(.legal) { grid-column: 2; }
+  /* Від 768 px: кожен пункт займає пару колонок (1 · 3 · 5 · 7 · 9) */
   @media (min-width: 768px) {
-    li { grid-column: span 2; }
+    .legal { grid-column: 1 / 3; grid-row: 1; }
+    li, li:not(.legal) { grid-column: span 2; grid-row: 1; }
   }
 
   a { text-decoration: none; display: inline-block; padding-block: 0.35em; }
-  li:not(:has(a)) { padding-block: 0.35em; }
+  .legal { padding-block: 0.35em; }
   /* Наведення: сірий, як у меню */
   a:hover { color: var(--color-text-muted); }
 </style>
