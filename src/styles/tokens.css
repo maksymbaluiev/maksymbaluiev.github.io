@@ -24,7 +24,7 @@
   --tracking-tight: -0.02em;
 
   /* Розмір тексту: один на весь сайт.
-     Телефон і планшет: 17px. Десктоп (від 1024): від ширини екрана (vw), з межами. */
+     Фіксований 17px на всіх екранах. */
   --text-base: 1.0625rem;
 
   /* Відступи */
@@ -57,7 +57,7 @@
   :root { --cols: 4; }
 }
 @media (min-width: 1024px) {
-  :root { --cols: 12; --text-base: clamp(0.9375rem, 1.13vw, 2.72rem); } /* 1024–1328 → 15px, 1771 → 20px */
+  :root { --cols: 12; }
 }
 
 @media (prefers-reduced-motion: reduce) {
