@@ -3,12 +3,23 @@ import type { ImageMetadata } from 'astro';
 
 export type Project = CollectionEntry<'projects'>;
 export type ProjectImage = { src: ImageMetadata; alt: string; file: string };
+// Елемент галереї сторінки проєкту: картинка або відео (mp4/webm, грає без звуку по колу)
+export type ProjectVideo = { video: string; alt: string; file: string };
+export type ProjectMedia = ProjectImage | ProjectVideo;
+export const isVideo = (m: ProjectMedia): m is ProjectVideo => 'video' in m;
 
 // Усі картинки з папок проєктів. Сортуються за назвою файлу (01.jpg, 02.jpg …).
 const files = import.meta.glob<{ default: ImageMetadata }>(
   '/src/content/projects/*/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP}',
   { eager: true },
 );
+
+// Відео з папок проєктів (адреса файлу після збірки)
+const videoFiles = import.meta.glob<string>('/src/content/projects/*/*.{mp4,webm,MP4,WEBM}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 
 // Тимчасові заглушки, поки в папці проєкту немає картинок.
 const placeholders = Object.values(
@@ -47,10 +58,21 @@ function placeholderImages(project: Project): ProjectImage[] {
   }));
 }
 
-/** Картинки для сторінки проєкту (без окремої обкладинки) */
-export function getProjectImages(project: Project): ProjectImage[] {
+function ownVideos(project: Project): ProjectVideo[] {
+  const prefix = `/src/content/projects/${project.id}/`;
+  return Object.entries(videoFiles)
+    .filter(([path]) => path.startsWith(prefix))
+    .map(([path, url]) => {
+      const file = path.slice(prefix.length);
+      return { video: url, file, alt: project.data.alts[file] ?? `${project.data.title}, video` };
+    });
+}
+
+/** Картинки й відео для сторінки проєкту (без окремої обкладинки), за назвою файлу */
+export function getProjectImages(project: Project): ProjectMedia[] {
   const own = ownImages(project);
-  const gallery = own.filter((img) => !isCoverFile(img.file));
+  const gallery: ProjectMedia[] = [...own.filter((img) => !isCoverFile(img.file)), ...ownVideos(project)];
+  gallery.sort((a, b) => a.file.localeCompare(b.file, undefined, { numeric: true }));
   if (gallery.length) return gallery;
   if (own.length) return own; // є лише обкладинка: показуємо її
   return placeholderImages(project);

@@ -27,6 +27,8 @@ const projects = defineCollection({
       alts: z.record(z.string(), z.string()).default({}),
       // Картинки, які стоять по дві в ряд (на пів ширини): ["03.gif", "04.gif"]
       half: z.array(z.string()).default([]),
+      // Текст між картинками: стоїть після вказаного файлу. { "04.jpg": "Абзац тексту" }
+      textAfter: z.record(z.string(), z.string()).default({}),
       // Додаткові рядки в таблиці проєкту: [{ label: Client, value: ... }]
       credits: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
       // Посилання, напр. на завантаження шрифту. Перше показується біля назви.

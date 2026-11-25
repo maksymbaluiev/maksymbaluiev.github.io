@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import { getImage, Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getProjects, getProjectImages, getCover, type Project } from '../../lib/projects';
+import { getProjects, getProjectImages, getCover, isVideo, type Project } from '../../lib/projects';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -15,17 +15,17 @@ export async function getStaticPaths() {
 interface Props { project: Project }
 const { project } = Astro.props;
 const { Content } = await render(project);
-const images = getProjectImages(project);
+const media = getProjectImages(project);
 // Велика версія кожної картинки для попапу (GIF — оригінал, щоб жила анімація)
 const large = await Promise.all(
-  images.map(async (img) =>
-    img.src.format === 'gif'
+  media.map(async (img) =>
+    isVideo(img) ? '' : img.src.format === 'gif'
       ? img.src.src
       : (await getImage({ src: img.src, width: Math.min(img.src.width, 3200), format: 'webp' })).src,
   ),
 );
 const og = await getImage({ src: getCover(project).src, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
-const { title, summary, services, year, links, credits, half } = project.data;
+const { title, summary, services, year, links, credits, half, textAfter } = project.data;
 
 // Таблиця під описом: номер · назва · значення (сервіси тепер біля назви)
 const rows = [
@@ -74,7 +74,14 @@ const rows = [
 
     <!-- Права частина: картинки -->
     <div class="media">
-      {images.map((img, i) => (
+      {media.map((img, i) => (
+        <>
+        {isVideo(img) ? (
+          /* Відео: грає без звуку по колу, як GIF */
+          <figure class:list={[{ half: half.includes(img.file) }]}>
+            <video src={img.video} autoplay muted loop playsinline preload="metadata" aria-label={img.alt}></video>
+          </figure>
+        ) : (
         <figure class:list={[{ half: half.includes(img.file) }]}>
           <button class="zoom" type="button" data-index={i} data-large={large[i]} aria-label={`Open image ${i + 1} larger`}>
           {img.src.format === 'gif' ? (
@@ -99,6 +106,9 @@ const rows = [
           )}
           </button>
         </figure>
+        )}
+        {textAfter[img.file] && <p class="between">{textAfter[img.file]}</p>}
+        </>
       ))}
     </div>
 
@@ -110,7 +120,7 @@ const rows = [
   <dialog class="lightbox" aria-label="Image viewer">
     <img class="lb-img" alt="" />
     <button class="lb-btn lb-close" type="button" aria-label="Close">×</button>
-    {images.length > 1 && (
+    {media.filter((m) => !isVideo(m)).length > 1 && (
       <>
         <button class="lb-btn lb-prev" type="button" aria-label="Previous image">←</button>
         <button class="lb-btn lb-next" type="button" aria-label="Next image">→</button>
@@ -243,7 +253,15 @@ const rows = [
   .lb-next { right: var(--space-2xs); top: 50%; transform: translateY(-50%); }
   @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
   @media (prefers-reduced-motion: reduce) { .lightbox[open] { animation: none; } }
-  figure :global(img) { width: 100%; }
+  figure :global(img), figure video { width: 100%; }
+  figure video { display: block; height: auto; }
+  /* Текст між картинками: на всю ширину блоку картинок, але не ширше за зручний рядок */
+  .between {
+    grid-column: 1 / -1;
+    max-width: var(--prose-max);
+    margin-block: var(--space-m);
+    line-height: var(--leading-normal);
+  }
 
   /* «Close project ×»: до 1024 px під картинками праворуч, на десктопі — у лівому блоці */
   .close-project { display: inline-flex; align-items: center; gap: 0.35em; min-height: var(--tap-min); }
