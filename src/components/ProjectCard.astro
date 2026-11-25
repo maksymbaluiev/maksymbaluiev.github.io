@@ -24,7 +24,7 @@ const num = String(index + 1).padStart(2, '0');
         alt={cover.alt}
         formats={['avif', 'webp']}
         widths={[400, 640, 800, 1200, 1600, 2000, 2560]}
-        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+        sizes="(min-width: 768px) 33vw, 100vw"
         loading={eager ? 'eager' : 'lazy'}
         fetchpriority={index === 0 ? 'high' : 'auto'}
       />

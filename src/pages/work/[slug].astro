@@ -97,7 +97,7 @@ const rows = [
               alt={img.alt}
               formats={['avif', 'webp']}
               widths={[640, 960, 1280, 1600, 2000, 2400, 3200, 3840]}
-              sizes="(min-width: 1024px) 66vw, calc(100vw - 2.25rem)"
+              sizes="(min-width: 768px) 66vw, calc(100vw - 2.25rem)"
               loading={i === 0 ? 'eager' : 'lazy'}
             />
           )}
@@ -163,7 +163,7 @@ const rows = [
 <style>
   /*
     Телефон: усе одне під одним.
-    Десктоп (від 1024 px): інфо в колонках 1–5 стоїть на місці, картинки в колонках 6–14.
+    Від 768 px: інфо в колонках 1–4 стоїть на місці, картинки в колонках 5–12.
   */
   .project {
     row-gap: var(--space-l);
@@ -260,13 +260,12 @@ const rows = [
     text-decoration: none;
   }
 
-  /* Вужче 1024: текстовий блок на всю ширину сітки.
-     Назва займає ліву половину (колонки 1–6), сервіси праву (7–12), текст на всю ширину. */
-  @media (max-width: 1023px) {
+  /* Телефон: текстовий блок на всю ширину, назва і сервіси по половинах */
+  @media (max-width: 767px) {
     .text { max-width: none; }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     .project { align-items: start; }
     .info {
       grid-column: 1 / 5;
