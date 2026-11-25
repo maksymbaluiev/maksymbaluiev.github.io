@@ -12,11 +12,14 @@
   --color-focus: #8ab4ff;
 
   /* Шрифти */
-  --font-sans: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  /* Основний шрифт. Варіанти, що вже підключені (fonts.css):
+     'Xanh Mono', 'Courier Prime', 'IBM Plex Mono'.
+     Повернути гротеск: 'Helvetica Neue', Helvetica, Arial, sans-serif */
+  --font-sans: 'Xanh Mono', ui-monospace, Menlo, monospace;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --weight-regular: 400;
   --weight-medium: 500;
-  --weight-base: 500;
+  --weight-base: 400;
   --leading-tight: 1.1;
   --leading-ui: 1.11;      /* дрібний текст, списки */
   --leading-display: 0.9;  /* великі заяви */
@@ -26,7 +29,7 @@
   /* Основні розміри: рахуються від ширини екрана (vw), з межами */
   --text-base: clamp(0.8125rem, 1.1333vw, 2.72rem);  /* 1280 → 14.5px, макс. як на 3840 */
   --text-display: clamp(2rem, 4.6667vw, 11.2rem);   /* 1280 → 60px, макс. як на 3840 */
-  --tracking-display: -0.035em;
+  --tracking-display: -0.03em;
 
   /* Шкала тексту: 360 px → 3840 px */
   --step--1: clamp(0.8125rem, 0.78rem + 0.12vw, 1.25rem);
