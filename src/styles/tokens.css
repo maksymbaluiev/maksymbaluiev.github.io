@@ -11,9 +11,9 @@
 
   /* Шрифти */
   /* Основний шрифт. Варіанти, що вже підключені (fonts.css):
-     'Xanh Mono', 'Courier Prime', 'IBM Plex Mono'.
+     'JetBrains Mono', 'IBM Plex Mono', 'Xanh Mono', 'Courier Prime'.
      Повернути гротеск: 'Helvetica Neue', Helvetica, Arial, sans-serif */
-  --font-sans: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --font-sans: 'JetBrains Mono', ui-monospace, Menlo, monospace;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --weight-regular: 400;
   --weight-medium: 500;
