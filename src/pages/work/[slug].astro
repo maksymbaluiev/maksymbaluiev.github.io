@@ -26,11 +26,9 @@ const large = await Promise.all(
 );
 const og = await getImage({ src: getCover(project).src, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
 const { title, summary, services, year, links, credits } = project.data;
-const [mainLink, ...otherLinks] = links;
 
-// Таблиця під описом: номер · назва · значення
+// Таблиця під описом: номер · назва · значення (сервіси тепер біля назви)
 const rows = [
-  ...(services.length ? [{ label: 'Services', value: services.join(', ') }] : []),
   ...credits,
   ...(year ? [{ label: 'Year', value: String(year) }] : []),
 ];
@@ -40,9 +38,14 @@ const rows = [
   <article class="cols project">
     <!-- Ліва частина: на десктопі стоїть на місці, поки гортаються картинки -->
     <aside class="info">
+      <!-- Назва (2 колонки) і сервіси сірим у стовпчик (наступні 2 колонки) -->
       <div class="head">
         <h1>{title}</h1>
-        {mainLink && <a class="ext" href={mainLink.url} rel="noopener">{mainLink.label} ↗</a>}
+        {services.length > 0 && (
+          <ul role="list" class="services" aria-label="Services">
+            {services.map((s) => <li>{s}</li>)}
+          </ul>
+        )}
       </div>
 
       <div class="text"><Content /></div>
@@ -59,9 +62,9 @@ const rows = [
         </dl>
       )}
 
-      {otherLinks.length > 0 && (
+      {links.length > 0 && (
         <ul role="list" class="more">
-          {otherLinks.map((l) => <li><a href={l.url} rel="noopener">{l.label} ↗</a></li>)}
+          {links.map((l) => <li><a href={l.url} target="_blank" rel="noopener">{l.label} ↗</a></li>)}
         </ul>
       )}
 
@@ -70,9 +73,7 @@ const rows = [
       )}
 
       <!-- Десктоп: стрілка внизу лівої колонки, повертає на початок сторінки -->
-      <a class="to-top" href="#top" aria-label="Back to top">
-        <svg viewBox="0 0 12 40" aria-hidden="true"><path d="M6 39V1M1 6l5-5 5 5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-      </a>
+      <a class="to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
     </aside>
 
     <!-- Права частина: картинки -->
@@ -170,9 +171,11 @@ const rows = [
   }
   .info, .media { grid-column: 1 / -1; }
 
-  .head { display: flex; justify-content: space-between; gap: var(--space-s); align-items: baseline; }
-  .ext, .next, .more a { text-decoration: none; }
-  .ext:hover, .next:hover, .more a:hover { color: var(--color-text-muted); }
+  /* Дві рівні половини блоку = рівно по дві колонки сітки */
+  .head { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gap); align-items: start; }
+  .services { color: var(--color-text-muted); }
+  .next, .more a, .to-top { text-decoration: none; }
+  .next:hover, .more a:hover, .to-top:hover { color: var(--color-text-muted); }
 
   .text { margin-top: var(--space-l); max-width: var(--prose-max); }
   .text :global(* + *) { margin-top: 1em; }
@@ -262,7 +265,6 @@ const rows = [
     .info {
       grid-column: 1 / 5;
       grid-row: 1;
-      padding-right: var(--space-m);
       position: sticky;
       top: var(--pad);
       /* якщо текст довший за екран, гортається тільки ця колонка */
@@ -272,20 +274,16 @@ const rows = [
       display: flex;
       flex-direction: column;
     }
-    /* Стрілка завжди внизу лівої колонки */
+    /* «Back to top ↑» завжди внизу лівої колонки, праворуч */
     .to-top {
       display: inline-flex;
       align-items: center;
+      gap: 0.35em;
       min-height: var(--tap-min);
       margin-top: auto;
-      align-self: flex-end;   /* правий нижній кут лівого блоку */
-      /* Зона кліку значно ширша за саму стрілку; стрілка стоїть біля правого краю */
-      justify-content: flex-end;
-      min-width: 6em;
-      padding: var(--space-m) 0 0 3em;
+      padding: var(--space-m) 0 0 var(--space-s);
+      align-self: flex-end;
     }
-    /* Довга тонка стрілка: висота ~3 рядки тексту */
-    .to-top svg { width: 0.6em; height: 3em; overflow: visible; }
     .media { grid-column: 5 / -1; grid-row: 1; }
     .close { display: none; }
   }
