@@ -205,6 +205,9 @@ const rows = [
   .media { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xs); align-items: start; }
   .media figure { grid-column: 1 / -1; }
   .media figure.half { grid-column: span 1; }
+  /* Картинки в парах обрізаються до квадрата по центру (оригінали не змінюються) */
+  .media figure.half :global(picture) { display: block; }
+  .media figure.half :global(img) { aspect-ratio: 1 / 1; height: auto; object-fit: cover; }
   figure { background: var(--color-surface); }
   .zoom { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
 
