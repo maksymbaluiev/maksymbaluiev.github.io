@@ -62,7 +62,9 @@ const rows = [
       )}
 
       <!-- Десктоп: стрілка внизу лівої колонки, повертає на початок сторінки -->
-      <a class="to-top" href="#top" aria-label="Back to top">↑</a>
+      <a class="to-top" href="#top" aria-label="Back to top">
+        <svg viewBox="0 0 12 40" aria-hidden="true"><path d="M6 39V1M1 6l5-5 5 5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      </a>
     </aside>
 
     <!-- Права частина: картинки -->
@@ -162,8 +164,10 @@ const rows = [
       min-height: var(--tap-min);
       margin-top: auto;
       padding-top: var(--space-m);
-      align-self: flex-start;
+      align-self: flex-end;   /* правий нижній кут лівого блоку */
     }
+    /* Довга тонка стрілка: висота ~3 рядки тексту */
+    .to-top svg { width: 0.6em; height: 3em; overflow: visible; }
     .media { grid-column: 6 / -1; grid-row: 1; }
     .close { display: none; }
   }
