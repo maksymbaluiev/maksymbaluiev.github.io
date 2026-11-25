@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Blog" description="Notes and articles by Maksym Baluiev.">
-  <section class="cols14 wrap">
+  <section class="cols wrap">
     <h1 class="label">Blog</h1>
     <p class="msg">Coming soon.</p>
   </section>
@@ -11,6 +11,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <style>
   .wrap { padding-top: var(--space-xl); align-items: start; }
-  h1 { grid-column: 1 / 6; grid-row: 1; }
-  .msg { grid-column: 1 / -1; grid-row: 1; text-indent: calc(100% * 5 / 14); }
+  h1 { grid-column: 1 / -1; }
+  .msg { grid-column: 1 / -1; }
+  @media (min-width: 768px) {
+    h1 { grid-column: 5 / 7; grid-row: 1; }
+    .msg { grid-column: 7 / -1; grid-row: 1; }
+  }
 </style>

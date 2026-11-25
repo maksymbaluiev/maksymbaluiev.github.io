@@ -17,15 +17,18 @@ const { projects } = Astro.props;
 </ul>
 
 <style>
-  /* Колонки: 1 → 2 → 3 → 4 → 5 → 6. Картки не роздуваються на широких екранах. */
+  /*
+    Та сама сітка, що й на всьому сайті (2 / 12 колонок).
+    Картка займає: телефон 2 з 2, планшет 6 з 12, десктоп 4, широкий 3, дуже широкий 2 (максимум 6 у ряд).
+  */
   .grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-l) var(--grid-gap);
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: var(--space-l) var(--gap);
   }
-  @media (min-width: 768px)  { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1280px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (min-width: 1920px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  @media (min-width: 2880px) { .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-  @media (min-width: 3600px) { .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  li { grid-column: span 2; }
+  @media (min-width: 768px)  { li { grid-column: span 6; } }
+  @media (min-width: 1024px) { li { grid-column: span 4; } }
+  @media (min-width: 1920px) { li { grid-column: span 3; } }
+  @media (min-width: 2880px) { li { grid-column: span 2; } }
 </style>

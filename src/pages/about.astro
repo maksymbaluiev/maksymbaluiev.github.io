@@ -3,81 +3,103 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../site.config';
 
 const social = SITE.social.filter((s) => s.url);
-const { profile, approach, services, clients, recognition, industries, experience } = SITE.about;
-
-// Блок «Info»: показуються лише непорожні групи.
-// inline: true = елементи через кому одним абзацом (як список клієнтів)
-const info = [
-  { label: 'Services', items: services },
-  { label: 'Experience', items: experience, inline: true },
-  { label: 'Clients', items: clients, inline: true },
-  { label: 'Recognition', items: recognition },
-  { label: 'Industries', items: industries },
-  { label: 'Based in', items: [SITE.location] },
-].filter((g) => g.items.length > 0);
-
-// Нумерація секцій рахується автоматично
-const sections = ['Profile', approach ? 'Approach' : null, 'Info', 'Contact'].filter(Boolean) as string[];
-const num = (name: string) => `${sections.indexOf(name) + 1}.`;
+const { profile, approach, services, clients } = SITE.about;
 ---
 
 <BaseLayout title="About" description={SITE.description}>
   <h1 class="visually-hidden">About {SITE.name}</h1>
 
-  <section class="cols14 sec sec--profile" aria-labelledby="s-profile">
-    <h2 id="s-profile" class="tag"><span class="pill">{num('Profile')} Profile</span></h2>
-    <p class="display">{profile}</p>
+  <!-- Кожна секція: сіра назва зліва, білий текст справа -->
+  <section class="cols sec sec--first" aria-labelledby="s-profile">
+    <h2 id="s-profile" class="tag">Profile</h2>
+    <p class="body">{profile}</p>
   </section>
 
   {approach && (
-    <section class="cols14 sec sec--approach" aria-labelledby="s-approach">
-      <h2 id="s-approach" class="tag"><span class="pill">{num('Approach')} Approach</span></h2>
-      <p class="display">{approach}</p>
+    <section class="cols sec" aria-labelledby="s-approach">
+      <h2 id="s-approach" class="tag">Approach</h2>
+      <p class="body">{approach}</p>
     </section>
   )}
 
-  <section class="cols14 sec sec--info" aria-labelledby="s-info">
-    <h2 id="s-info" class="tag"><span class="pill">{num('Info')} Info</span></h2>
-    <dl class="body">
-      {info.map((g) => (
-        <div class="group">
-          <dt>{g.label}</dt>
-          {g.inline ? <dd>{g.items.join(', ')}</dd> : g.items.map((item) => <dd>{item}</dd>)}
-        </div>
-      ))}
-    </dl>
-  </section>
+  {services.length > 0 && (
+    <section class="cols sec" aria-labelledby="s-services">
+      <h2 id="s-services" class="tag">Services</h2>
+      <ul role="list" class="body">{services.map((s) => <li>{s}</li>)}</ul>
+    </section>
+  )}
 
-  <section class="cols14 sec sec--info" aria-labelledby="s-contact">
-    <h2 id="s-contact" class="tag"><span class="pill">{num('Contact')} Contact</span></h2>
+  {clients.length > 0 && (
+    <section class="cols sec" aria-labelledby="s-clients">
+      <h2 id="s-clients" class="tag">Clients</h2>
+      <p class="body">{clients.join(', ')}</p>
+    </section>
+  )}
+
+  <section class="cols sec" id="contact" aria-labelledby="s-contact">
+    <h2 id="s-contact" class="tag">Contact</h2>
     <ul role="list" class="body">
-      <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      <li>
+        <!-- Наведення: «Copy email». Клік: копіює адресу (без JS відкриває пошту). -->
+        <a class="copy-email" href={`mailto:${SITE.email}`} data-email={SITE.email}>
+          <span class="ce-default">{SITE.email}</span>
+          <span class="ce-hover" aria-hidden="true">Copy email</span>
+          <span class="ce-done" aria-hidden="true">Copied</span>
+        </a>
+        <span class="visually-hidden" aria-live="polite" data-copy-status></span>
+      </li>
       {social.map((s) => <li><a href={s.url} rel="me noopener">{s.label}</a></li>)}
     </ul>
   </section>
 </BaseLayout>
 
-<style>
-  /* Сітка 14 колонок. Мітка і текст стоять в одному рядку сітки. */
-  .sec { align-items: start; }
-  .tag, .display, .body { grid-row: 1; }
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.copy-email').forEach((link) => {
+    const status = link.parentElement?.querySelector('[data-copy-status]');
+    link.addEventListener('click', async (e) => {
+      const email = link.dataset.email;
+      if (!email || !navigator.clipboard) return; // без буфера: звичайне посилання mailto
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(email);
+        link.classList.add('is-copied');
+        if (status) status.textContent = 'Email copied';
+        setTimeout(() => {
+          link.classList.remove('is-copied');
+          if (status) status.textContent = '';
+        }, 1600);
+      } catch {
+        window.location.href = `mailto:${email}`;
+      }
+    });
+  });
+</script>
 
-  /* Усі секції однаково: мітка з 6-ї колонки, текст з 9-ї */
-  .tag { grid-column: 6 / 9; }
-  .display, .body { grid-column: 9 / -1; max-width: var(--prose-max); }
-  .display { line-height: var(--leading-normal); }
-  .sec--profile { padding-top: var(--space-xl); }
+<style>
+  /* 12 колонок: назва з 5-ї колонки, текст з 7-ї. Телефон: назва над текстом. */
+  .sec { align-items: start; }
+  .tag { color: var(--color-text-muted); grid-column: 1 / -1; }
+  .body { grid-column: 1 / -1; margin-top: var(--space-2xs); max-width: var(--prose-max); line-height: var(--leading-normal); }
+  ul.body { line-height: var(--leading-ui); }
+  .sec--first { padding-top: var(--space-xl); }
   .sec + .sec { margin-top: max(var(--space-l), 4vw); }
-  .group + .group { margin-top: 0.35em; }
-  dt { color: var(--color-text-muted); }
-  dd { margin: 0; padding-left: 1em; max-width: 36em; }
+
+  @media (min-width: 768px) {
+    .tag { grid-column: 5 / 7; grid-row: 1; }
+    .body { grid-column: 7 / -1; grid-row: 1; margin-top: 0; }
+  }
+
   .body a { text-decoration: none; }
   .body a:hover { color: var(--color-text-muted); }
-  ul.body li { line-height: 1.6; }
+  ul.body li a { display: inline-block; padding-block: 0.2em; }
 
-  /* Телефон: мітка над текстом */
-  @media (max-width: 767px) {
-    .tag { grid-column: 1 / -1; }
-    .display, .body { grid-column: 1 / -1; grid-row: 2; margin-top: var(--space-2xs); }
-  }
+  /* Email: три стани в одній «комірці», щоб текст не стрибав */
+  .copy-email { display: inline-grid; cursor: pointer; }
+  .copy-email > span { grid-area: 1 / 1; transition: opacity 0.2s var(--ease); }
+  .ce-hover, .ce-done { opacity: 0; }
+  .copy-email:hover { color: inherit; }
+  .copy-email:hover .ce-default, .copy-email:focus-visible .ce-default { opacity: 0; }
+  .copy-email:hover .ce-hover, .copy-email:focus-visible .ce-hover { opacity: 1; color: var(--color-text-muted); }
+  .copy-email.is-copied .ce-default, .copy-email.is-copied .ce-hover { opacity: 0; }
+  .copy-email.is-copied .ce-done { opacity: 1; }
 </style>

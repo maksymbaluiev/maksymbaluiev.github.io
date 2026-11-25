@@ -81,14 +81,15 @@ ul[role='list'] { list-style: none; padding: 0; }
   }
 }
 
-/* Базова сітка на 14 колонок, як у шапці та на About */
-.cols14 {
+/* Базова сітка сайту: 2 колонки на телефоні, 12 від 768 px */
+.cols {
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gap);
   padding-inline: var(--pad);
 }
 
-/* Мітка секції («1. Profile»): просто сірий текст, як Services у шапці */
+/* Мітка секції («Profile»): просто сірий текст, як Services у шапці */
 .pill {
   color: var(--color-text-muted);
   white-space: nowrap;

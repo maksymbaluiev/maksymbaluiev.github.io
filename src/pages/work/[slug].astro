@@ -29,7 +29,7 @@ const rows = [
 ---
 
 <BaseLayout title={title} description={summary} image={og.src} type="article">
-  <article class="cols14 project">
+  <article class="cols project">
     <!-- Ліва частина: на десктопі стоїть на місці, поки гортаються картинки -->
     <aside class="info">
       <div class="head">
@@ -76,7 +76,7 @@ const rows = [
             alt={img.alt}
             formats={['avif', 'webp']}
             widths={[640, 960, 1280, 1600, 2000, 2400, 3200, 4800]}
-            sizes="(min-width: 1024px) 64vw, calc(100vw - 2rem)"
+            sizes="(min-width: 1024px) 66vw, calc(100vw - 2.25rem)"
             loading={i === 0 ? 'eager' : 'lazy'}
           />
         </figure>
@@ -143,9 +143,9 @@ const rows = [
   }
 
   @media (min-width: 1024px) {
-    .project { column-gap: 0; align-items: start; }
+    .project { align-items: start; }
     .info {
-      grid-column: 1 / 6;
+      grid-column: 1 / 5;
       grid-row: 1;
       padding-right: var(--space-m);
       position: sticky;
@@ -171,7 +171,7 @@ const rows = [
     }
     /* Довга тонка стрілка: висота ~3 рядки тексту */
     .to-top svg { width: 0.6em; height: 3em; overflow: visible; }
-    .media { grid-column: 6 / -1; grid-row: 1; }
+    .media { grid-column: 5 / -1; grid-row: 1; }
     .close { display: none; }
   }
 </style>

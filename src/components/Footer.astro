@@ -4,7 +4,7 @@ const social = SITE.social.filter((s) => s.url);
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer cols14" id="contact">
+<footer class="site-footer cols">
   <a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
   {
     social.length > 0 && (
@@ -31,8 +31,8 @@ const year = new Date().getFullYear();
   .social { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0 var(--space-xs); }
   .copy { grid-column: 1 / -1; color: var(--color-text-muted); }
   @media (min-width: 768px) {
-    .email { grid-column: 1 / 6; }
-    .social { grid-column: 6 / 12; }
-    .copy { grid-column: 12 / -1; justify-self: end; align-self: center; }
+    .email { grid-column: 1 / 5; }
+    .social { grid-column: 5 / 9; }
+    .copy { grid-column: 9 / -1; justify-self: end; align-self: center; }
   }
 </style>
