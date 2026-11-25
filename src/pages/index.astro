@@ -8,48 +8,14 @@ const projects = await getProjects();
 ---
 
 <BaseLayout>
-  <section class="container intro" aria-labelledby="intro-title">
-    <h1 id="intro-title" class="visually-hidden">{SITE.name}, designer</h1>
-    <p class="lead">{SITE.intro}</p>
-    <div class="facts">
-      <div>
-        <p class="label">Services</p>
-        <ul role="list">{SITE.services.map((s) => <li>{s}</li>)}</ul>
-      </div>
-      <div>
-        <p class="label">Based in</p>
-        <p>{SITE.location}</p>
-      </div>
-    </div>
-  </section>
-
+  <!-- Заголовки для читалок екрана і пошуковиків, на екрані не видно -->
+  <h1 class="visually-hidden">{SITE.name}, designer</h1>
   <section class="container work" aria-labelledby="work-title">
-    <h2 id="work-title" class="label work-title">Selected work ({projects.length})</h2>
+    <h2 id="work-title" class="visually-hidden">Selected work</h2>
     <ProjectGrid projects={projects} />
   </section>
 </BaseLayout>
 
 <style>
-  .intro {
-    display: grid;
-    gap: var(--space-l);
-    padding-block: var(--space-l) var(--space-xl);
-  }
-  .lead {
-    font-size: var(--step-1);
-    line-height: 1.2;
-    letter-spacing: var(--tracking-tight);
-    max-width: 32ch;
-  }
-  @media (min-width: 768px) { .lead { font-size: var(--step-2); } }
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-    font-size: var(--step--1);
-  }
-  @media (min-width: 1280px) {
-    .intro { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: end; }
-  }
-  .work-title { margin-bottom: var(--space-s); }
+  .work { padding-top: var(--space-l); }
 </style>
