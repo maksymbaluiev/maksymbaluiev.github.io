@@ -124,8 +124,6 @@ const rows = [
     )}
   </dialog>
 
-  <!-- Телефон: кнопка «Close» внизу екрана, повертає на головну -->
-  <a class="close" href="/">Close</a>
 </BaseLayout>
 
 <script>
@@ -254,20 +252,6 @@ const rows = [
   .to-top { display: none; text-decoration: none; }
   .to-top:hover { color: var(--color-text-muted); }
 
-  .close {
-    position: fixed;
-    left: 50%;
-    bottom: var(--space-s);
-    transform: translateX(-50%);
-    z-index: 5;
-    padding: 0.5em 0.9em;
-    min-height: var(--tap-min);
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-surface);
-    border-radius: 0.4em;
-    text-decoration: none;
-  }
 
   /* Вужче 1024: текстовий блок на всю ширину сітки.
      Назва займає ліву половину (колонки 1–6), сервіси праву (7–12), текст на всю ширину. */
@@ -312,6 +296,5 @@ const rows = [
       align-self: flex-end;
     }
     .media { grid-column: 5 / -1; grid-row: 1; }
-    .close { display: none; }
   }
 </style>
