@@ -74,7 +74,6 @@ export const SITE = {
   social: [
     { label: 'Instagram', url: 'https://www.instagram.com/maksymbaluiev/' },
     { label: 'Behance', url: 'https://www.behance.net/baluiev' },
-    { label: 'Dribbble', url: 'https://dribbble.com/Baluiev' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/maksym-baluiev-58748561/' },
   ],
 
