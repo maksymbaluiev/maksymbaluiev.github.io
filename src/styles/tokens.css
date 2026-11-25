@@ -13,11 +13,11 @@
   /* Основний шрифт. Варіанти, що вже підключені (fonts.css):
      'JetBrains Mono', 'IBM Plex Mono', 'Xanh Mono', 'Courier Prime'.
      Повернути гротеск: 'Helvetica Neue', Helvetica, Arial, sans-serif */
-  --font-sans: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --font-sans: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --weight-regular: 400;
   --weight-medium: 500;
-  --weight-base: 400;
+  --weight-base: 500;
   --leading-tight: 1.1;
   --leading-ui: 1.11;      /* дрібний текст, списки */
   --leading-normal: 1.45;
