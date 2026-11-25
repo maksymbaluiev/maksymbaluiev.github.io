@@ -19,7 +19,7 @@ const { projects } = Astro.props;
 <style>
   /*
     Та сама сітка, що й на всьому сайті (2 / 12 колонок).
-    Картка займає: телефон 2 з 2, планшет 6 з 12, десктоп 4, широкий 3, дуже широкий 2 (максимум 6 у ряд).
+    Картка займає: телефон 2 з 2, планшет 6 з 12, від 1024 px 4 з 12 — тобто максимум 3 в ряд на будь-якому екрані.
   */
   .grid {
     display: grid;
@@ -29,6 +29,4 @@ const { projects } = Astro.props;
   li { grid-column: span 2; }
   @media (min-width: 768px)  { li { grid-column: span 6; } }
   @media (min-width: 1024px) { li { grid-column: span 4; } }
-  @media (min-width: 1920px) { li { grid-column: span 3; } }
-  @media (min-width: 2880px) { li { grid-column: span 2; } }
 </style>

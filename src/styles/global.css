@@ -87,6 +87,10 @@ ul[role='list'] { list-style: none; padding: 0; }
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
   column-gap: var(--gap);
   padding-inline: var(--pad);
+  /* на дуже широких екранах сітка не ширша за --page-max і стоїть по центру */
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
 }
 
 /* Мітка секції («Profile»): просто сірий текст, як Services у шапці */
