@@ -4,12 +4,11 @@ import { SITE } from '../site.config';
 const path = Astro.url.pathname;
 const blog = SITE.nav.find((n) => n.label === 'Blog');
 const rest = SITE.nav.filter((n) => n.label !== 'Blog');
-// Contact веде на секцію About, тому активним рахуємо лише About
-const isActive = (href: string) => !href.includes('#') && path.startsWith(href);
+const isActive = (href: string) => path.startsWith(href);
 ---
 
 <header class="site-header cols14">
-  <a class="name" href="/" aria-current={path === '/' ? 'page' : undefined}>{SITE.name}</a>
+  <a class="name" href="/">{SITE.name}</a>
 
   <ul role="list" class="locations">
     {SITE.locations.map((l) => <li>{l}</li>)}
@@ -26,14 +25,9 @@ const isActive = (href: string) => !href.includes('#') && path.startsWith(href);
     {blog && (
       <a class="blog" href={blog.href} aria-current={isActive(blog.href) ? 'page' : undefined}>{blog.label}</a>
     )}
-    <p class="pair">
-      {rest.map((item, i) => (
-        <>
-          {i > 0 && <span class="sep" aria-hidden="true">|</span>}
-          <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
-        </>
-      ))}
-    </p>
+    {rest.map((item) => (
+      <a class="pair" href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+    ))}
   </nav>
 </header>
 
@@ -58,8 +52,6 @@ const isActive = (href: string) => !href.includes('#') && path.startsWith(href);
   .name { grid-column: 1 / 7; }
   .locations, .services { display: none; }
   .nav { grid-column: 7 / -1; display: flex; justify-content: flex-end; gap: var(--space-xs); }
-  .pair { display: flex; align-items: center; gap: 0.35em; }
-  .sep { color: var(--color-text-muted); }
 
   /* Зони дотику на телефоні */
   @media (max-width: 1023px) {

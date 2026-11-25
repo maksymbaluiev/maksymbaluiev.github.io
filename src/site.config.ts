@@ -80,7 +80,6 @@ export const SITE = {
   // Пункти меню. Головна відкривається кліком по імені.
   nav: [
     { label: 'Blog', href: '/blog/' },
-    { label: 'About', href: '/about/' },
-    { label: 'Contact', href: '/about/#contact' },
+    { label: 'About | Contact', href: '/about/' },
   ],
 };
