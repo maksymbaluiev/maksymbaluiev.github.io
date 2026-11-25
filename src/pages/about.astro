@@ -48,7 +48,7 @@ const { profile, approach, services, clients } = SITE.about;
         </a>
         <span class="visually-hidden" aria-live="polite" data-copy-status></span>
       </li>
-      {social.map((s) => <li><a href={s.url} rel="me noopener">{s.label}</a></li>)}
+      {social.map((s) => <li><a href={s.url} target="_blank" rel="me noopener noreferrer">{s.label}</a></li>)}
     </ul>
   </section>
 </BaseLayout>

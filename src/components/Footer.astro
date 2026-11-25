@@ -4,35 +4,36 @@ const social = SITE.social.filter((s) => s.url);
 const year = new Date().getFullYear();
 ---
 
+<!-- Підвал: пункти стоять по колонках сітки (12 на десктопі, 2 на телефоні) -->
 <footer class="site-footer cols">
-  <a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
-  {
-    social.length > 0 && (
-      <ul role="list" class="social">
-        {social.map((s) => (
-          <li><a href={s.url} rel="me noopener">{s.label}</a></li>
-        ))}
-      </ul>
-    )
-  }
-  <p class="copy">© {year} {SITE.name}</p>
+  <ul role="list" class="items">
+    <li>©{year}</li>
+    <li>Privacy Policy</li>
+    {social.map((s) => (
+      <li><a href={s.url} target="_blank" rel="me noopener noreferrer">{s.label}</a></li>
+    ))}
+  </ul>
 </footer>
 
 <style>
   .site-footer {
     margin-top: var(--space-xl);
     padding-block: var(--space-m);
-    row-gap: var(--space-2xs);
-    align-items: start;
   }
-  a { text-decoration: none; display: inline-flex; align-items: center; min-height: var(--tap-min); }
-  a:hover { color: var(--color-text-muted); }
-  .email { grid-column: 1 / -1; }
-  .social { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0 var(--space-xs); }
-  .copy { grid-column: 1 / -1; color: var(--color-text-muted); }
+  /* Список сам стає сіткою: кожен пункт займає одну «пару» колонок */
+  .items {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    row-gap: var(--space-3xs);
+  }
+  li { grid-column: span 1; }
   @media (min-width: 768px) {
-    .email { grid-column: 1 / 5; }
-    .social { grid-column: 5 / 9; }
-    .copy { grid-column: 9 / -1; justify-self: end; align-self: center; }
+    li { grid-column: span 2; }
   }
+
+  a { text-decoration: none; display: inline-block; padding-block: 0.35em; }
+  li:not(:has(a)) { padding-block: 0.35em; }
+  /* Наведення: сірий, як у меню */
+  a:hover { color: var(--color-text-muted); }
 </style>

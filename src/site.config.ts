@@ -70,13 +70,14 @@ export const SITE = {
     industries: [] as string[],
     experience: [] as string[],
   },
-  // Порожній url = посилання не показується. TODO: додати адреси профілів.
+  // Соцмережі (у підвалі та на About). Відкриваються в новому вікні.
   social: [
-    { label: 'Behance', url: '' },
-    { label: 'Instagram', url: '' },
-    { label: 'Dribbble', url: '' },
-    { label: 'LinkedIn', url: '' },
+    { label: 'Instagram', url: 'https://www.instagram.com/maksymbaluiev/' },
+    { label: 'Behance', url: 'https://www.behance.net/baluiev' },
+    { label: 'Dribbble', url: 'https://dribbble.com/Baluiev' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/maksym-baluiev-58748561/' },
   ],
+
   // Пункти меню. Головна відкривається кліком по імені.
   nav: [
     { label: 'Blog', href: '/blog/' },
