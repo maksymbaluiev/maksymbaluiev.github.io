@@ -17,7 +17,7 @@ const isActive = (href: string) => path.startsWith(href);
 
   <!--
     На телефоні це висувна панель справа.
-    Від 880 px панель «розчиняється» (display: contents), і її пункти стають колонками шапки.
+    Від 768 px панель «розчиняється» (display: contents), і її пункти стають колонками шапки.
   -->
   <div class="panel" id="site-menu">
     <nav aria-label="Main" class="nav">
@@ -56,7 +56,7 @@ const isActive = (href: string) => path.startsWith(href);
   document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
   header?.querySelectorAll('.panel a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   // Якщо екран став широким, меню закривається
-  window.matchMedia('(min-width: 880px)').addEventListener('change', () => setOpen(false));
+  window.matchMedia('(min-width: 768px)').addEventListener('change', () => setOpen(false));
 </script>
 
 <style>
@@ -74,7 +74,7 @@ const isActive = (href: string) => path.startsWith(href);
   /* Наведення і активний пункт: сірий */
   a:hover, a[aria-current='page'] { color: var(--color-text-muted); }
 
-  /* ——— Телефон і вузький планшет (до 880 px): ім'я + кнопка, меню у висувній панелі ——— */
+  /* ——— Телефон і вузький планшет (до 768 px): ім'я + кнопка, меню у висувній панелі ——— */
   .site-header { padding-block: var(--space-3xs); position: relative; z-index: 20; }
   .name { grid-column: 1 / -2; display: inline-flex; align-items: center; min-height: var(--tap-min); }
 
@@ -124,10 +124,10 @@ const isActive = (href: string) => path.startsWith(href);
   .nav { display: flex; flex-direction: column; }
   .nav a { display: inline-flex; align-items: center; min-height: var(--tap-min); }
 
-  /* ——— Від 880 px: звичайна шапка в колонках (вужче — бургер, бо ім'я не влазить у 2 колонки) ———
+  /* ——— Від 768 px: звичайна шапка в колонках (вужче — бургер, там сітка вже 2 колонки) ———
      Усі пункти вирівняні по верху; однаковий відступ зверху дає їм спільну лінію
      і водночас збільшує зону дотику. */
-  @media (min-width: 880px) {
+  @media (min-width: 768px) {
     .site-header { padding-block: 0 var(--space-3xs); }
     .toggle { display: none; }
     .panel {
@@ -137,7 +137,7 @@ const isActive = (href: string) => path.startsWith(href);
     .name, .nav a, .locations, .services { padding-top: var(--space-xs); }
     .name, .nav a { display: inline-block; min-height: 0; padding-bottom: var(--space-2xs); }
 
-    /* Проміжний стан (880–1023): ім'я · Blog у 3-й колонці з 6 (= 5-та з 12, на одній лінії з назвами розділів About) · About | Contact праворуч */
+    /* Проміжний стан (768–1023): ім'я · Blog у 3-й колонці з 6 (= 5-та з 12, на одній лінії з назвами розділів About) · About | Contact праворуч */
     .name { grid-column: 1 / 3; grid-row: 1; }
     .locations, .services { display: none; }
     .nav { grid-column: 5 / -1; grid-row: 1; display: grid; grid-template-columns: subgrid; }
