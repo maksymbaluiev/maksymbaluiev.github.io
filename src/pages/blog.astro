@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Blog" description="Notes and articles by Maksym Baluiev.">
+  <section class="cols14 wrap">
+    <h1 class="label">Blog</h1>
+    <p class="msg">Coming soon.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .wrap { padding-top: var(--space-xl); align-items: start; }
+  h1 { grid-column: 1 / 6; grid-row: 1; }
+  .msg { grid-column: 1 / -1; grid-row: 1; text-indent: calc(100% * 5 / 14); font-size: var(--text-display); line-height: var(--leading-display); letter-spacing: var(--tracking-display); }
+</style>

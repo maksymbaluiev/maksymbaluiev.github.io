@@ -51,7 +51,7 @@ ul[role='list'] { list-style: none; padding: 0; }
 .prose ul { padding-left: 1.2em; }
 
 .muted { color: var(--color-text-muted); }
-.label { font-size: var(--step--1); color: var(--color-text-muted); }
+.label { color: var(--color-text-muted); }
 
 .visually-hidden {
   position: absolute !important;

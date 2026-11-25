@@ -10,6 +10,9 @@ export const SITE = {
   intro:
     'Designer from Kyiv, currently based in Zurich, with 15 years of experience. My expertise spans brand identity, graphic design, motion, 3D, packaging, and illustration. I also experiment with product design and architecture, exploring new creative possibilities at the intersection of form and function.',
   location: 'Zurich, Switzerland',
+  // Шапка сайту
+  locations: ['Zurich, Switzerland', 'Kyiv, Ukraine'],
+  headerServices: ['Brand Identity', 'Art Direction', 'Illustration', 'Graphic Design'],
   email: 'maksymbaluiev@gmail.com',
   services: [
     'Brand Identity',
@@ -74,8 +77,10 @@ export const SITE = {
     { label: 'Dribbble', url: '' },
     { label: 'LinkedIn', url: '' },
   ],
+  // Пункти меню. Головна відкривається кліком по імені.
   nav: [
-    { label: 'Work', href: '/' },
+    { label: 'Blog', href: '/blog/' },
     { label: 'About', href: '/about/' },
+    { label: 'Contact', href: '/about/#contact' },
   ],
 };
