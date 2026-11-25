@@ -1,8 +1,7 @@
 ---
 import { render } from 'astro:content';
-import { getImage } from 'astro:assets';
+import { getImage, Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectGallery from '../../components/ProjectGallery.astro';
 import { getProjects, getProjectImages, getCover, type Project } from '../../lib/projects';
 
 export async function getStaticPaths() {
@@ -18,71 +17,137 @@ const { project, next } = Astro.props;
 const { Content } = await render(project);
 const images = getProjectImages(project);
 const og = await getImage({ src: getCover(project).src, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
-const { title, summary, services, year, links } = project.data;
+const { title, summary, services, year, links, credits } = project.data;
+const [mainLink, ...otherLinks] = links;
+
+// Таблиця під описом: номер · назва · значення
+const rows = [
+  ...(services.length ? [{ label: 'Services', value: services.join(', ') }] : []),
+  ...credits,
+  ...(year ? [{ label: 'Year', value: String(year) }] : []),
+];
 ---
 
 <BaseLayout title={title} description={summary} image={og.src} type="article">
-  <article>
-    <header class="container head">
-      <h1 class="title">{title}</h1>
-      <dl class="meta">
-        {services.length > 0 && (
-          <div>
-            <dt class="label">Services</dt>
-            {services.map((s) => <dd>{s}</dd>)}
-          </div>
-        )}
-        {year && (
-          <div>
-            <dt class="label">Year</dt>
-            <dd>{year}</dd>
-          </div>
-        )}
-      </dl>
-      <div class="about">
-        <p class="label about-label">About project</p>
-        <div class="prose"><Content /></div>
-        {links.length > 0 && (
-          <ul role="list" class="links">
-            {links.map((l) => (
-              <li><a href={l.url} rel="noopener">{l.label} ↗</a></li>
-            ))}
-          </ul>
-        )}
+  <article class="cols14 project">
+    <!-- Ліва частина: на десктопі стоїть на місці, поки гортаються картинки -->
+    <aside class="info">
+      <div class="head">
+        <h1>{title}</h1>
+        {mainLink && <a class="ext" href={mainLink.url} rel="noopener">{mainLink.label} ↗</a>}
       </div>
-    </header>
 
-    <div class="container">
-      <ProjectGallery images={images} />
+      <div class="text"><Content /></div>
+
+      {rows.length > 0 && (
+        <dl class="rows">
+          {rows.map((r, i) => (
+            <div class="row">
+              <span class="n" aria-hidden="true">{i + 1}</span>
+              <dt>{r.label}</dt>
+              <dd>{r.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
+      {otherLinks.length > 0 && (
+        <ul role="list" class="more">
+          {otherLinks.map((l) => <li><a href={l.url} rel="noopener">{l.label} ↗</a></li>)}
+        </ul>
+      )}
+
+      {next.id !== project.id && (
+        <a class="next" href={`/work/${next.id}/`}><span class="label">Next</span> {next.data.title} →</a>
+      )}
+    </aside>
+
+    <!-- Права частина: картинки -->
+    <div class="media">
+      {images.map((img, i) => (
+        <figure>
+          <Picture
+            src={img.src}
+            alt={img.alt}
+            formats={['avif', 'webp']}
+            widths={[640, 960, 1280, 1600, 2000, 2400, 3200, 4800]}
+            sizes="(min-width: 1024px) 64vw, calc(100vw - 2rem)"
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </figure>
+      ))}
     </div>
   </article>
 
-  {next.id !== project.id && (
-    <nav class="container next" aria-label="Next project">
-      <a href={`/work/${next.id}/`}>
-        <span class="label">Next project</span>
-        <span class="next-title">{next.data.title} →</span>
-      </a>
-    </nav>
-  )}
+  <!-- Телефон: кнопка «Close» внизу екрана, повертає на головну -->
+  <a class="close" href="/">Close</a>
 </BaseLayout>
 
 <style>
-  .head {
+  /*
+    Телефон: усе одне під одним.
+    Десктоп (від 1024 px): інфо в колонках 1–5 стоїть на місці, картинки в колонках 6–14.
+  */
+  .project {
+    row-gap: var(--space-l);
+    padding-top: max(var(--space-l), 8vw);
+  }
+  .info, .media { grid-column: 1 / -1; }
+
+  .head { display: flex; justify-content: space-between; gap: var(--space-s); align-items: baseline; }
+  .ext, .next, .more a { text-decoration: none; }
+  .ext:hover, .next:hover, .more a:hover { color: var(--color-text-muted); }
+
+  .text { margin-top: var(--space-l); max-width: var(--prose-max); }
+  .text :global(* + *) { margin-top: 1em; }
+  .text :global(ul) { padding-left: 1.2em; }
+
+  /* Таблиця: номер, назва (сіра), значення */
+  .rows { margin-top: var(--space-l); }
+  .row {
     display: grid;
-    gap: var(--space-m);
-    padding-block: var(--space-l);
+    grid-template-columns: 1fr 1fr 3fr;
+    column-gap: var(--space-xs);
   }
-  .meta { display: flex; flex-wrap: wrap; gap: var(--space-m); }
-  .meta dd { margin: 0; }
-  .about-label { margin-bottom: var(--space-2xs); }
-  .links { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-m); }
-  .links a { display: inline-flex; align-items: center; min-height: var(--tap-min); }
-  @media (min-width: 1280px) {
-    .head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--space-l); }
-    .title { grid-column: 1 / -1; }
-    .meta { flex-direction: column; }
+  .n, dt { color: var(--color-text-muted); }
+  dd { margin: 0; }
+
+  .more { margin-top: var(--space-s); }
+  .next { display: inline-block; margin-top: var(--space-l); }
+
+  .media { display: grid; gap: var(--space-2xs); }
+  figure { background: var(--color-surface); }
+  figure :global(img) { width: 100%; }
+
+  .close {
+    position: fixed;
+    left: 50%;
+    bottom: var(--space-s);
+    transform: translateX(-50%);
+    z-index: 5;
+    padding: 0.5em 0.9em;
+    min-height: var(--tap-min);
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-surface);
+    border-radius: 0.4em;
+    text-decoration: none;
   }
-  .next { margin-top: var(--space-xl); }
-  .next a { display: inline-grid; gap: var(--space-3xs); text-decoration: none; padding-block: var(--space-2xs); }
+
+  @media (min-width: 1024px) {
+    .project { column-gap: 0; align-items: start; }
+    .info {
+      grid-column: 1 / 6;
+      grid-row: 1;
+      padding-right: var(--space-m);
+      position: sticky;
+      top: var(--pad);
+      /* якщо текст довший за екран, гортається тільки ця колонка */
+      max-height: calc(100dvh - 2 * var(--pad));
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .media { grid-column: 6 / -1; grid-row: 1; }
+    .close { display: none; }
+  }
 </style>

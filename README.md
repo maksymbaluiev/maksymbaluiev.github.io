@@ -24,7 +24,7 @@ npm run preview  # перегляд зібраного сайту
 
 Оригінали картинок ніхто не змінює: збірка робить з них оптимізовані AVIF/WebP у `dist/`.
 
-Поля `index.md`: `title`, `summary` (коротко, для картки і соцмереж), `services`, `year`, `order` (порядок у сітці), `cover`, `coverAlt`, `alts`, `links`, `draft: true` (сховати).
+Поля `index.md`: `title`, `summary` (коротко, для соцмереж), `services`, `year`, `credits` (рядки таблиці, напр. `- { label: Client, value: University of Zurich }`), `links` (перше посилання стоїть біля назви, напр. `- { label: Download, url: https://... }`), `order` (порядок у сітці), `cover`, `coverAlt`, `alts`, `draft: true` (сховати).
 
 ## Де що міняти
 
