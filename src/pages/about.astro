@@ -3,12 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../site.config';
 
 const social = SITE.social.filter((s) => s.url);
-const { approach, clients, recognition, industries, experience } = SITE.about;
+const { profile, approach, services, clients, recognition, industries, experience } = SITE.about;
 
 // Блок «Info»: показуються лише непорожні групи.
 // inline: true = елементи через кому одним абзацом (як список клієнтів)
 const info = [
-  { label: 'Services', items: SITE.services },
+  { label: 'Services', items: services },
   { label: 'Experience', items: experience, inline: true },
   { label: 'Clients', items: clients, inline: true },
   { label: 'Recognition', items: recognition },
@@ -26,7 +26,7 @@ const num = (name: string) => `${sections.indexOf(name) + 1}.`;
 
   <section class="cols14 sec sec--profile" aria-labelledby="s-profile">
     <h2 id="s-profile" class="tag"><span class="pill">{num('Profile')} Profile</span></h2>
-    <p class="display">{SITE.intro}</p>
+    <p class="display">{profile}</p>
   </section>
 
   {approach && (
