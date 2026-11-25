@@ -39,7 +39,7 @@
   /* Макет */
   --pad: clamp(1.125rem, 1.4vw, 4.5rem);  /* поля сторінки (1771 → 25px) */
   --gap: clamp(0.333rem, 0.3rem + 0.117vw, 0.583rem); /* проміжок між колонками (1771 → 7px) */
-  --cols: 2;                               /* колонки сітки: 2 на телефоні, 12 від 768 px */
+  --cols: 2;                               /* колонки сітки: 2 телефон, 4 планшет (768+), 12 десктоп (1024+) */
   --page-max: 3840px;      /* сторінка не ширша за це */
   --page-gutter: var(--pad);
   --prose-max: 65ch;       /* довжина рядка тексту */
@@ -54,10 +54,10 @@
 }
 
 @media (min-width: 768px) {
-  :root { --cols: 12; }
+  :root { --cols: 4; }
 }
 @media (min-width: 1024px) {
-  :root { --text-base: clamp(0.9375rem, 1.13vw, 2.72rem); } /* 1024–1328 → 15px, 1771 → 20px */
+  :root { --cols: 12; --text-base: clamp(0.9375rem, 1.13vw, 2.72rem); } /* 1024–1328 → 15px, 1771 → 20px */
 }
 
 @media (prefers-reduced-motion: reduce) {
