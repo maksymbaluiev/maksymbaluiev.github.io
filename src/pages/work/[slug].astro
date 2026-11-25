@@ -60,6 +60,9 @@ const rows = [
       {next.id !== project.id && (
         <a class="next" href={`/work/${next.id}/`}><span class="label">Next</span> {next.data.title} →</a>
       )}
+
+      <!-- Десктоп: стрілка внизу лівої колонки, повертає на початок сторінки -->
+      <a class="to-top" href="#top" aria-label="Back to top">↑</a>
     </aside>
 
     <!-- Права частина: картинки -->
@@ -119,6 +122,9 @@ const rows = [
   figure { background: var(--color-surface); }
   figure :global(img) { width: 100%; }
 
+  .to-top { display: none; text-decoration: none; }
+  .to-top:hover { color: var(--color-text-muted); }
+
   .close {
     position: fixed;
     left: 50%;
@@ -143,9 +149,20 @@ const rows = [
       position: sticky;
       top: var(--pad);
       /* якщо текст довший за екран, гортається тільки ця колонка */
-      max-height: calc(100dvh - 2 * var(--pad));
+      height: calc(100dvh - 2 * var(--pad));
       overflow-y: auto;
       scrollbar-width: none;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Стрілка завжди внизу лівої колонки */
+    .to-top {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--tap-min);
+      margin-top: auto;
+      padding-top: var(--space-m);
+      align-self: flex-start;
     }
     .media { grid-column: 6 / -1; grid-row: 1; }
     .close { display: none; }
