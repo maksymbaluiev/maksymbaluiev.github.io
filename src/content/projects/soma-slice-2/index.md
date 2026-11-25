@@ -9,4 +9,4 @@ Slice 2.0 is a free variable display typeface inspired by pixel art and digital 
 
 It supports Latin (Basic, Western, Central and South East European, South American) and Cyrillic, including full support for Ukrainian.
 
-Free for personal and commercial use. Feel free to download it, and if you use it, I'd love to see your work!
+Free for personal and commercial use. Feel free to <a href="https://drive.google.com/drive/folders/1HCwmQPMybIw0D4DRR1MiNNQ3fyXaVgXs" target="_blank" rel="noopener">download</a> it, and if you use it, I'd love to see your work!
