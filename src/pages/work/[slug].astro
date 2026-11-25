@@ -163,8 +163,11 @@ const rows = [
       align-items: center;
       min-height: var(--tap-min);
       margin-top: auto;
-      padding-top: var(--space-m);
       align-self: flex-end;   /* правий нижній кут лівого блоку */
+      /* Зона кліку значно ширша за саму стрілку; стрілка стоїть біля правого краю */
+      justify-content: flex-end;
+      min-width: 6em;
+      padding: var(--space-m) 0 0 3em;
     }
     /* Довга тонка стрілка: висота ~3 рядки тексту */
     .to-top svg { width: 0.6em; height: 3em; overflow: visible; }
