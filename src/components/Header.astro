@@ -10,14 +10,14 @@ const isActive = (href: string) => path.startsWith(href);
 <header class="site-header cols" data-menu>
   <a class="name" href="/">{SITE.name}</a>
 
-  <!-- Кнопка меню (до 768 px): «+» повертається і стає «×» -->
+  <!-- Кнопка меню (до 900 px): «+» повертається і стає «×» -->
   <button class="toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
     <span aria-hidden="true">+</span>
   </button>
 
   <!--
-    До 768 px це висувна панель справа.
-    Від 768 px панель «розчиняється» (display: contents), і її пункти стають колонками шапки.
+    До 900 px це висувна панель справа.
+    Від 900 px панель «розчиняється» (display: contents), і її пункти стають колонками шапки.
   -->
   <div class="panel" id="site-menu">
     <nav aria-label="Main" class="nav">
@@ -58,7 +58,7 @@ const isActive = (href: string) => path.startsWith(href);
   document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
   header?.querySelectorAll('.panel a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   // Якщо екран став широким, меню закривається
-  window.matchMedia('(min-width: 768px)').addEventListener('change', () => setOpen(false));
+  window.matchMedia('(min-width: 900px)').addEventListener('change', () => setOpen(false));
 </script>
 
 <style>
@@ -76,7 +76,7 @@ const isActive = (href: string) => path.startsWith(href);
   /* Наведення і активний пункт: сірий */
   a:hover, a[aria-current='page'] { color: var(--color-text-muted); }
 
-  /* ——— До 768 px: ім'я + кнопка, меню у висувній панелі ——— */
+  /* ——— До 900 px: ім'я + кнопка, меню у висувній панелі ——— */
   .site-header { padding-block: var(--space-3xs); position: relative; z-index: 20; }
   .name { grid-column: 1 / -2; display: inline-flex; align-items: center; min-height: var(--tap-min); }
 
@@ -126,9 +126,9 @@ const isActive = (href: string) => path.startsWith(href);
   .nav { display: flex; flex-direction: column; }
   .nav a { display: inline-flex; align-items: center; min-height: var(--tap-min); }
 
-  /* ——— Від 768 px: повне меню в колонках (вужче — бургер). Лише два стани. ———
+  /* ——— Від 900 px: повне меню в колонках (вужче — бургер). Лише два стани. ———
      Усі пункти вирівняні по верху: однаковий відступ зверху дає спільну лінію. */
-  @media (min-width: 768px) {
+  @media (min-width: 900px) {
     .site-header { padding-block: 0 var(--space-3xs); }
     .toggle { display: none; }
     .home { display: none !important; }

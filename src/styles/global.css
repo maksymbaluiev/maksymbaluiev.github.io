@@ -81,7 +81,7 @@ ul[role='list'] { list-style: none; padding: 0; }
   }
 }
 
-/* Базова сітка сайту: 2 колонки на телефоні, 12 від 768 px */
+/* Базова сітка сайту: 2 колонки на телефоні, 12 від 900 px */
 .cols {
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));

@@ -19,7 +19,7 @@ const { projects } = Astro.props;
 <style>
   /*
     Та сама сітка, що й на всьому сайті (2 / 12 колонок).
-    Картка займає: телефон 2 з 2 (1 в ряд), від 768 px 4 з 12 (3 в ряд).
+    Картка займає: телефон 2 з 2 (1 в ряд), від 900 px 4 з 12 (3 в ряд).
   */
   .grid {
     display: grid;
@@ -27,5 +27,5 @@ const { projects } = Astro.props;
     gap: var(--space-l) var(--gap);
   }
   li { grid-column: span 2; }
-  @media (min-width: 768px) { li { grid-column: span 4; } }
+  @media (min-width: 900px) { li { grid-column: span 4; } }
 </style>
