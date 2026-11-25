@@ -46,5 +46,23 @@ const ogImage = new URL(image, Astro.site);
       <slot />
     </main>
     <Footer />
+
+    <!-- М'який скрол (Lenis, як у референсі). Вимкнений, якщо в системі «зменшити рух». -->
+    <script>
+      import Lenis from 'lenis';
+      import 'lenis/dist/lenis.css';
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lenis = reduce ? null : new Lenis({ autoRaf: true, allowNestedScroll: true });
+
+      // Стрілка «вгору»: плавно на початок сторінки
+      document.querySelectorAll<HTMLAnchorElement>('a[href="#top"]').forEach((a) =>
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (lenis) lenis.scrollTo(0);
+          else window.scrollTo(0, 0);
+        }),
+      );
+    </script>
   </body>
 </html>
