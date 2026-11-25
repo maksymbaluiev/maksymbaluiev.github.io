@@ -16,8 +16,9 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
-  font-size: var(--step-0);
-  line-height: var(--leading-normal);
+  font-size: var(--text-base);
+  font-weight: var(--weight-base);
+  line-height: var(--leading-ui);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -34,7 +35,7 @@ a:hover { color: var(--color-text-muted); }
   outline-offset: 3px;
 }
 
-h1, h2, h3 { font-weight: var(--weight-regular); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+h1, h2, h3 { font-weight: var(--weight-base); font-size: inherit; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
 p, li { overflow-wrap: break-word; }
 ul[role='list'] { list-style: none; padding: 0; }
 
@@ -45,7 +46,7 @@ ul[role='list'] { list-style: none; padding: 0; }
   padding-inline: var(--page-gutter);
 }
 
-.prose { max-width: var(--prose-max); }
+.prose { max-width: var(--prose-max); line-height: var(--leading-normal); }
 .prose > * + * { margin-top: 1em; }
 .prose ul { padding-left: 1.2em; }
 
@@ -76,4 +77,21 @@ ul[role='list'] { list-style: none; padding: 0; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Базова сітка на 14 колонок, як у шапці та на About */
+.cols14 {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  padding-inline: var(--pad);
+}
+
+/* Мітка-«пігулка»: «1. Profile» */
+.pill {
+  display: inline-block;
+  padding: 0.25em 0.45em;
+  border: 1px solid var(--color-pill-line);
+  border-radius: 0.3em;
+  background: var(--color-pill);
+  line-height: 1;
 }

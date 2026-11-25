@@ -1,8 +1,10 @@
 /* Дизайн-токени. Редизайн починається тут. */
 :root {
   /* Кольори */
-  --color-bg: #0b0b0b;
-  --color-surface: #161616;
+  --color-bg: #000;
+  --color-surface: #141414;
+  --color-pill: #1c1c1c;     /* фон мітки / активного пункту меню */
+  --color-pill-line: #333;
   --color-text: #f2f2f2;
   --color-text-muted: #9a9a9a; /* контраст ≥ 7:1 на --color-bg */
   --color-line: #2a2a2a;
@@ -14,9 +16,17 @@
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --weight-regular: 400;
   --weight-medium: 500;
+  --weight-base: 500;
   --leading-tight: 1.1;
+  --leading-ui: 1.11;      /* дрібний текст, списки */
+  --leading-display: 0.9;  /* великі заяви */
   --leading-normal: 1.45;
   --tracking-tight: -0.02em;
+
+  /* Основні розміри: рахуються від ширини екрана (vw), з межами */
+  --text-base: clamp(0.8125rem, 1.1333vw, 2.72rem);  /* 1280 → 14.5px, макс. як на 3840 */
+  --text-display: clamp(2rem, 4.6667vw, 11.2rem);   /* 1280 → 60px, макс. як на 3840 */
+  --tracking-display: -0.035em;
 
   /* Шкала тексту: 360 px → 3840 px */
   --step--1: clamp(0.8125rem, 0.78rem + 0.12vw, 1.25rem);
@@ -35,8 +45,10 @@
   --space-xl: clamp(3rem, 2.2rem + 2.8vw, 9rem);
 
   /* Макет */
+  --pad: clamp(0.75rem, 0.9333vw, 3rem);  /* поля сторінки */
+  --cols: 14;                              /* колонки базової сітки */
   --page-max: 3840px;      /* сторінка не ширша за це */
-  --page-gutter: var(--space-s);
+  --page-gutter: var(--pad);
   --prose-max: 65ch;       /* довжина рядка тексту */
   --media-max: 2400px;     /* макс. ширина картинок у проєкті */
   --grid-gap: var(--space-s);

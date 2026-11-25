@@ -4,43 +4,35 @@ const social = SITE.social.filter((s) => s.url);
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer" id="contact">
-  <div class="container inner">
-    <div>
-      <p class="label">Contact</p>
-      <a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
-    </div>
-    {
-      social.length > 0 && (
-        <div>
-          <p class="label">Elsewhere</p>
-          <ul role="list" class="social">
-            {social.map((s) => (
-              <li><a href={s.url} rel="me noopener">{s.label}</a></li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
-    <p class="label copy">© {year} {SITE.name}</p>
-  </div>
+<footer class="site-footer cols14" id="contact">
+  <a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+  {
+    social.length > 0 && (
+      <ul role="list" class="social">
+        {social.map((s) => (
+          <li><a href={s.url} rel="me noopener">{s.label}</a></li>
+        ))}
+      </ul>
+    )
+  }
+  <p class="copy">© {year} {SITE.name}</p>
 </footer>
 
 <style>
   .site-footer {
     margin-top: var(--space-xl);
-    border-top: 1px solid var(--color-line);
+    padding-block: var(--space-m);
+    row-gap: var(--space-2xs);
+    align-items: start;
   }
-  .inner {
-    display: grid;
-    gap: var(--space-m);
-    padding-block: var(--space-m) var(--space-l);
-  }
+  a { text-decoration: none; display: inline-flex; align-items: center; min-height: var(--tap-min); }
+  a:hover { color: var(--color-text-muted); }
+  .email { grid-column: 1 / -1; }
+  .social { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0 var(--space-xs); }
+  .copy { grid-column: 1 / -1; color: var(--color-text-muted); }
   @media (min-width: 768px) {
-    .inner { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
-    .copy { justify-self: end; }
+    .email { grid-column: 1 / 6; }
+    .social { grid-column: 6 / 12; }
+    .copy { grid-column: 12 / -1; justify-self: end; align-self: center; }
   }
-  .email { font-size: var(--step-1); }
-  a { display: inline-block; padding-block: 0.35em; }
-  .social { display: flex; flex-wrap: wrap; gap: 0 var(--space-s); }
 </style>

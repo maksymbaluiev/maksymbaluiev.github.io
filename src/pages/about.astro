@@ -5,11 +5,12 @@ import { SITE } from '../site.config';
 const social = SITE.social.filter((s) => s.url);
 const { approach, clients, recognition, industries, experience } = SITE.about;
 
-// Блок «Info»: показуються лише непорожні списки
+// Блок «Info»: показуються лише непорожні групи.
+// inline: true = елементи через кому одним абзацом (як список клієнтів)
 const info = [
   { label: 'Services', items: SITE.services },
-  { label: 'Experience', items: experience },
-  { label: 'Clients', items: clients },
+  { label: 'Experience', items: experience, inline: true },
+  { label: 'Clients', items: clients, inline: true },
   { label: 'Recognition', items: recognition },
   { label: 'Industries', items: industries },
   { label: 'Based in', items: [SITE.location] },
@@ -23,72 +24,79 @@ const num = (name: string) => `${sections.indexOf(name) + 1}.`;
 <BaseLayout title="About" description={SITE.description}>
   <h1 class="visually-hidden">About {SITE.name}</h1>
 
-  <section class="container section" aria-labelledby="s-profile">
-    <h2 id="s-profile" class="label">{num('Profile')} Profile</h2>
-    <p class="statement">{SITE.intro}</p>
+  <section class="cols14 sec sec--profile" aria-labelledby="s-profile">
+    <h2 id="s-profile" class="tag"><span class="pill">{num('Profile')} Profile</span></h2>
+    <p class="display">{SITE.intro}</p>
   </section>
 
   {approach && (
-    <section class="container section" aria-labelledby="s-approach">
-      <h2 id="s-approach" class="label">{num('Approach')} Approach</h2>
-      <p class="statement">{approach}</p>
+    <section class="cols14 sec sec--approach" aria-labelledby="s-approach">
+      <h2 id="s-approach" class="tag"><span class="pill">{num('Approach')} Approach</span></h2>
+      <p class="display">{approach}</p>
     </section>
   )}
 
-  <section class="container section" aria-labelledby="s-info">
-    <h2 id="s-info" class="label">{num('Info')} Info</h2>
-    <dl class="info">
+  <section class="cols14 sec sec--info" aria-labelledby="s-info">
+    <h2 id="s-info" class="tag"><span class="pill">{num('Info')} Info</span></h2>
+    <dl class="body">
       {info.map((g) => (
         <div class="group">
-          <dt class="label">{g.label}</dt>
-          {g.items.map((item) => <dd>{item}</dd>)}
+          <dt>{g.label}</dt>
+          {g.inline ? <dd>{g.items.join(', ')}</dd> : g.items.map((item) => <dd>{item}</dd>)}
         </div>
       ))}
     </dl>
   </section>
 
-  <section class="container section" aria-labelledby="s-contact">
-    <h2 id="s-contact" class="label">{num('Contact')} Contact</h2>
-    <ul role="list" class="contact">
-      <li><a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+  <section class="cols14 sec sec--info" aria-labelledby="s-contact">
+    <h2 id="s-contact" class="tag"><span class="pill">{num('Contact')} Contact</span></h2>
+    <ul role="list" class="body">
+      <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
       {social.map((s) => <li><a href={s.url} rel="me noopener">{s.label}</a></li>)}
     </ul>
   </section>
 </BaseLayout>
 
 <style>
-  /* Кожна секція: номер і назва зліва, зміст праворуч */
-  .section {
-    display: grid;
-    gap: var(--space-s);
-    padding-block: var(--space-l);
-  }
-  .section + .section { border-top: 1px solid var(--color-line); }
-  @media (min-width: 1280px) {
-    .section {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
-      column-gap: var(--space-l);
-      padding-block: var(--space-xl);
-    }
-  }
-  .statement {
-    font-size: var(--step-1);
-    line-height: 1.2;
-    letter-spacing: var(--tracking-tight);
-    max-width: 30ch;
-  }
-  @media (min-width: 768px) { .statement { font-size: var(--step-2); } }
+  /*
+    Сітка 14 колонок. Мітка і текст стоять в одному рядку сітки:
+    великий текст починається з відступом (text-indent) після мітки,
+    а наступні рядки йдуть на всю ширину свого блоку.
+  */
+  .sec { align-items: start; }
+  .tag, .display, .body { grid-row: 1; }
 
-  .info {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-    font-size: var(--step--1);
+  .display {
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
   }
-  @media (min-width: 768px) { .info { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .info dt { margin-bottom: var(--space-3xs); }
-  .info dd { margin: 0; }
 
-  .contact a { display: inline-block; padding-block: 0.35em; }
-  .email { font-size: var(--step-1); }
+  /* 1. Profile: мітка в колонці 1, текст на всю ширину з відступом 5/14 */
+  .sec--profile { padding-top: var(--space-xl); }
+  .sec--profile .tag { grid-column: 1 / 6; }
+  .sec--profile .display { grid-column: 1 / -1; text-indent: calc(100% * 5 / 14); }
+
+  /* 2. Approach: блок з колонки 6, перший рядок з колонки 9 */
+  .sec--approach { margin-top: 1.4vw; }
+  .sec--approach .tag { grid-column: 6 / 9; }
+  .sec--approach .display { grid-column: 6 / -1; text-indent: calc(100% * 3 / 9); }
+
+  /* 3. Info і Contact: мітка в колонці 6, списки з колонки 9 */
+  .sec--info { margin-top: max(var(--space-xl), 6.7vw); }
+  .sec--info .tag { grid-column: 6 / 9; }
+  .sec--info .body { grid-column: 9 / -1; }
+  .group + .group { margin-top: 0.35em; }
+  dd { margin: 0; padding-left: 1em; max-width: 36em; }
+  .body a { text-decoration: none; }
+  .body a:hover { color: var(--color-text-muted); }
+  ul.body li { line-height: 1.6; }
+
+  /* Телефон: менше колонок для відступів, щоб текст не стискався */
+  @media (max-width: 767px) {
+    .sec--approach .tag, .sec--info .tag { grid-column: 1 / 6; }
+    .sec--approach .display { grid-column: 1 / -1; text-indent: calc(100% * 5 / 14); }
+    .sec--info .body { grid-column: 6 / -1; }
+    .sec--approach { margin-top: var(--space-l); }
+  }
 </style>
