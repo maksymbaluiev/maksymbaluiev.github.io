@@ -24,7 +24,7 @@
   --tracking-tight: -0.02em;
 
   /* Розмір тексту: один на весь сайт.
-     Телефон: 15px. Від 768 px: від ширини екрана (vw), з межами. */
+     Телефон і планшет: 15px. Десктоп (від 1024): від ширини екрана (vw), з межами. */
   --text-base: 0.9375rem;
 
   /* Відступи */
@@ -54,10 +54,10 @@
 }
 
 @media (min-width: 768px) {
-  :root {
-    --cols: 12;
-    --text-base: clamp(0.8125rem, 1.02vw, 2.45rem); /* до 1274 → 13px, 1771 → 18px */
-  }
+  :root { --cols: 12; }
+}
+@media (min-width: 1024px) {
+  :root { --text-base: clamp(0.8125rem, 1.02vw, 2.45rem); } /* 1280 → 13px, 1771 → 18px */
 }
 
 @media (prefers-reduced-motion: reduce) {
