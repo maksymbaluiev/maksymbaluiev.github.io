@@ -21,6 +21,8 @@ const isActive = (href: string) => path.startsWith(href);
   -->
   <div class="panel" id="site-menu">
     <nav aria-label="Main" class="nav">
+      <!-- Головна: лише в бургер-меню (на десктопі на головну веде ім'я) -->
+      <a class="home" href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
       {blog && (
         <a class="blog" href={blog.href} aria-current={isActive(blog.href) ? 'page' : undefined}>{blog.label}</a>
       )}
@@ -129,6 +131,7 @@ const isActive = (href: string) => path.startsWith(href);
   @media (min-width: 1024px) {
     .site-header { padding-block: 0 var(--space-3xs); }
     .toggle { display: none; }
+    .home { display: none !important; }
     .panel {
       display: contents;
       visibility: visible;
