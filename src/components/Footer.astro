@@ -1,6 +1,6 @@
 ---
 import { SITE } from '../site.config';
-const social = SITE.social.filter((s) => s.url);
+const social = SITE.social.filter((s) => s.url && s.footer !== false);
 const year = new Date().getFullYear();
 ---
 

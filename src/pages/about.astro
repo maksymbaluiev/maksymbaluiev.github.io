@@ -24,7 +24,7 @@ const { profile, approach, services, clients } = SITE.about;
 
   {services.length > 0 && (
     <section class="cols sec" aria-labelledby="s-services">
-      <h2 id="s-services" class="tag">Services</h2>
+      <h2 id="s-services" class="tag">All Services</h2>
       <ul role="list" class="body">{services.map((s) => <li>{s}</li>)}</ul>
     </section>
   )}
@@ -41,35 +41,46 @@ const { profile, approach, services, clients } = SITE.about;
     <ul role="list" class="body">
       <li>
         <!-- Наведення: «Copy email». Клік: копіює адресу (без JS відкриває пошту). -->
-        <a class="copy-email" href={`mailto:${SITE.email}`} data-email={SITE.email}>
+        <a class="copy-email" href={`mailto:${SITE.email}`} data-copy={SITE.email} data-status="Email copied">
           <span class="ce-default">{SITE.email}</span>
           <span class="ce-hover" aria-hidden="true">Copy email</span>
           <span class="ce-done" aria-hidden="true">Copied</span>
         </a>
-        <span class="visually-hidden" aria-live="polite" data-copy-status></span>
       </li>
       {social.map((s) => <li><a href={s.url} target="_blank" rel="me noopener noreferrer">{s.label}</a></li>)}
+      {SITE.signal && (
+        <li>
+          <!-- Signal: наведення «Copy username», клік копіює юзернейм -->
+          <button type="button" class="copy-email" data-copy={SITE.signal} data-status="Signal username copied" aria-label={`Signal: ${SITE.signal}, copy username`}>
+            <span class="ce-default">Signal</span>
+            <span class="ce-hover" aria-hidden="true">Copy username</span>
+            <span class="ce-done" aria-hidden="true">Copied</span>
+          </button>
+        </li>
+      )}
     </ul>
+    <span class="visually-hidden" aria-live="polite" data-copy-status></span>
   </section>
 </BaseLayout>
 
 <script>
-  document.querySelectorAll<HTMLAnchorElement>('.copy-email').forEach((link) => {
-    const status = link.parentElement?.querySelector('[data-copy-status]');
+  const status = document.querySelector('[data-copy-status]');
+  document.querySelectorAll<HTMLElement>('.copy-email').forEach((link) => {
     link.addEventListener('click', async (e) => {
-      const email = link.dataset.email;
-      if (!email || !navigator.clipboard) return; // без буфера: звичайне посилання mailto
+      const value = link.dataset.copy;
+      const isMail = link instanceof HTMLAnchorElement;
+      if (!value || !navigator.clipboard) return; // без буфера: email відкриває пошту
       e.preventDefault();
       try {
-        await navigator.clipboard.writeText(email);
+        await navigator.clipboard.writeText(value);
         link.classList.add('is-copied');
-        if (status) status.textContent = 'Email copied';
+        if (status) status.textContent = link.dataset.status ?? 'Copied';
         setTimeout(() => {
           link.classList.remove('is-copied');
           if (status) status.textContent = '';
         }, 1600);
       } catch {
-        window.location.href = `mailto:${email}`;
+        if (isMail) window.location.href = `mailto:${value}`;
       }
     });
   });
@@ -100,7 +111,8 @@ const { profile, approach, services, clients } = SITE.about;
   ul.body li a { display: inline-block; padding-block: 0.2em; }
 
   /* Email: три стани в одній «комірці», щоб текст не стрибав */
-  ul.body li a.copy-email { display: inline-grid; justify-items: start; cursor: pointer; }
+  ul.body li .copy-email { display: inline-grid; justify-items: start; cursor: pointer; padding-block: 0.2em; }
+  button.copy-email { padding-inline: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; }
   .copy-email > span { grid-area: 1 / 1; transition: opacity 0.2s var(--ease); }
   .ce-hover, .ce-done { opacity: 0; }
   .copy-email:hover { color: inherit; }

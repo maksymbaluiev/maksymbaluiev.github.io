@@ -75,7 +75,12 @@ export const SITE = {
     { label: 'Instagram', url: 'https://www.instagram.com/maksymbaluiev/' },
     { label: 'Behance', url: 'https://www.behance.net/baluiev' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/maksym-baluiev-58748561/' },
-  ],
+    // footer: false — тільки в Contact на сторінці About, у підвалі не показується
+    { label: 'Dribbble', url: 'https://dribbble.com/Baluiev', footer: false },
+    { label: 'Facebook', url: 'https://www.facebook.com/baluiev/', footer: false },
+  ] as { label: string; url: string; footer?: boolean }[],
+  // Signal: у Contact клік копіює юзернейм
+  signal: 'Maksym_Baluiev.01',
 
   // Пункти меню. Головна відкривається кліком по імені.
   nav: [
