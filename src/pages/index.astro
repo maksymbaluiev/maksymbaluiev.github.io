@@ -17,5 +17,7 @@ const projects = await getProjects();
 </BaseLayout>
 
 <style>
-  .work { padding-top: var(--space-l); }
+  /* Великий порожній відступ під шапкою, як у референсі:
+     сітка починається приблизно на 27% ширини екрана від верху */
+  .work { padding-top: max(var(--space-l), 19vw); }
 </style>
