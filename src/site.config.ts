@@ -21,6 +21,16 @@ export const SITE = {
     '3D Design',
     'UX / UI Design',
   ],
+  // Сторінка About. Порожні поля не показуються.
+  about: {
+    // 2. Approach: як ти працюєш (кілька речень). TODO: текст від Максима
+    approach: '',
+    // 3. Info: списки. TODO: дані від Максима
+    clients: [] as string[],
+    recognition: [] as string[],
+    industries: [] as string[],
+    experience: [] as string[],
+  },
   // Порожній url = посилання не показується. TODO: додати адреси профілів.
   social: [
     { label: 'Behance', url: '' },

@@ -1,35 +1,94 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../site.config';
+
 const social = SITE.social.filter((s) => s.url);
+const { approach, clients, recognition, industries, experience } = SITE.about;
+
+// Блок «Info»: показуються лише непорожні списки
+const info = [
+  { label: 'Services', items: SITE.services },
+  { label: 'Experience', items: experience },
+  { label: 'Clients', items: clients },
+  { label: 'Recognition', items: recognition },
+  { label: 'Industries', items: industries },
+  { label: 'Based in', items: [SITE.location] },
+].filter((g) => g.items.length > 0);
+
+// Нумерація секцій рахується автоматично
+const sections = ['Profile', approach ? 'Approach' : null, 'Info', 'Contact'].filter(Boolean) as string[];
+const num = (name: string) => `${sections.indexOf(name) + 1}.`;
 ---
 
 <BaseLayout title="About" description={SITE.description}>
-  <div class="container wrap">
-    <h1 class="title">About</h1>
-    <div class="prose lead"><p>{SITE.intro}</p></div>
-    <div class="cols">
-      <section>
-        <h2 class="label">Services</h2>
-        <ul role="list">{SITE.services.map((s) => <li>{s}</li>)}</ul>
-      </section>
-      <section>
-        <h2 class="label">Contact</h2>
-        <ul role="list">
-          <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-          {social.map((s) => <li><a href={s.url} rel="me noopener">{s.label}</a></li>)}
-        </ul>
-      </section>
-    </div>
-  </div>
+  <h1 class="visually-hidden">About {SITE.name}</h1>
+
+  <section class="container section" aria-labelledby="s-profile">
+    <h2 id="s-profile" class="label">{num('Profile')} Profile</h2>
+    <p class="statement">{SITE.intro}</p>
+  </section>
+
+  {approach && (
+    <section class="container section" aria-labelledby="s-approach">
+      <h2 id="s-approach" class="label">{num('Approach')} Approach</h2>
+      <p class="statement">{approach}</p>
+    </section>
+  )}
+
+  <section class="container section" aria-labelledby="s-info">
+    <h2 id="s-info" class="label">{num('Info')} Info</h2>
+    <dl class="info">
+      {info.map((g) => (
+        <div class="group">
+          <dt class="label">{g.label}</dt>
+          {g.items.map((item) => <dd>{item}</dd>)}
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="container section" aria-labelledby="s-contact">
+    <h2 id="s-contact" class="label">{num('Contact')} Contact</h2>
+    <ul role="list" class="contact">
+      <li><a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      {social.map((s) => <li><a href={s.url} rel="me noopener">{s.label}</a></li>)}
+    </ul>
+  </section>
 </BaseLayout>
 
 <style>
-  .wrap { display: grid; gap: var(--space-l); padding-block: var(--space-l); }
-  .title { font-size: var(--step-3); }
-  .lead { font-size: var(--step-1); }
-  .cols { display: grid; gap: var(--space-m); }
-  @media (min-width: 768px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: var(--prose-max); } }
-  .cols h2 { margin-bottom: var(--space-2xs); }
-  .cols a { display: inline-block; padding-block: 0.35em; }
+  /* Кожна секція: номер і назва зліва, зміст праворуч */
+  .section {
+    display: grid;
+    gap: var(--space-s);
+    padding-block: var(--space-l);
+  }
+  .section + .section { border-top: 1px solid var(--color-line); }
+  @media (min-width: 1280px) {
+    .section {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      column-gap: var(--space-l);
+      padding-block: var(--space-xl);
+    }
+  }
+  .statement {
+    font-size: var(--step-1);
+    line-height: 1.2;
+    letter-spacing: var(--tracking-tight);
+    max-width: 30ch;
+  }
+  @media (min-width: 768px) { .statement { font-size: var(--step-2); } }
+
+  .info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+    font-size: var(--step--1);
+  }
+  @media (min-width: 768px) { .info { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .info dt { margin-bottom: var(--space-3xs); }
+  .info dd { margin: 0; }
+
+  .contact a { display: inline-block; padding-block: 0.35em; }
+  .email { font-size: var(--step-1); }
 </style>
