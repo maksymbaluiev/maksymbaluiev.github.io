@@ -1,0 +1,88 @@
+---
+import { render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectGallery from '../../components/ProjectGallery.astro';
+import { getProjects, getProjectImages, getCover, type Project } from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+interface Props { project: Project; next: Project }
+const { project, next } = Astro.props;
+const { Content } = await render(project);
+const images = getProjectImages(project);
+const og = await getImage({ src: getCover(project).src, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const { title, summary, services, year, links } = project.data;
+---
+
+<BaseLayout title={title} description={summary} image={og.src} type="article">
+  <article>
+    <header class="container head">
+      <h1 class="title">{title}</h1>
+      <dl class="meta">
+        {services.length > 0 && (
+          <div>
+            <dt class="label">Services</dt>
+            {services.map((s) => <dd>{s}</dd>)}
+          </div>
+        )}
+        {year && (
+          <div>
+            <dt class="label">Year</dt>
+            <dd>{year}</dd>
+          </div>
+        )}
+      </dl>
+      <div class="about">
+        <div class="prose"><Content /></div>
+        {links.length > 0 && (
+          <ul role="list" class="links">
+            {links.map((l) => (
+              <li><a href={l.url} rel="noopener">{l.label} ↗</a></li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </header>
+
+    <div class="container">
+      <ProjectGallery images={images} />
+    </div>
+  </article>
+
+  {next.id !== project.id && (
+    <nav class="container next" aria-label="Next project">
+      <a href={`/work/${next.id}/`}>
+        <span class="label">Next project</span>
+        <span class="next-title">{next.data.title} →</span>
+      </a>
+    </nav>
+  )}
+</BaseLayout>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    padding-block: var(--space-l);
+  }
+  .title { font-size: var(--step-3); }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--space-m); font-size: var(--step--1); }
+  .meta dd { margin: 0; }
+  .links { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-m); }
+  .links a { display: inline-flex; align-items: center; min-height: var(--tap-min); }
+  @media (min-width: 1280px) {
+    .head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--space-l); }
+    .title { grid-column: 1 / -1; }
+    .meta { flex-direction: column; }
+  }
+  .next { margin-top: var(--space-xl); }
+  .next a { display: inline-grid; gap: var(--space-3xs); text-decoration: none; padding-block: var(--space-2xs); }
+  .next-title { font-size: var(--step-2); }
+</style>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../site.config';
+const social = SITE.social.filter((s) => s.url);
+---
+
+<BaseLayout title="About" description={SITE.description}>
+  <div class="container wrap">
+    <h1 class="title">About</h1>
+    <div class="prose lead"><p>{SITE.intro}</p></div>
+    <div class="cols">
+      <section>
+        <h2 class="label">Services</h2>
+        <ul role="list">{SITE.services.map((s) => <li>{s}</li>)}</ul>
+      </section>
+      <section>
+        <h2 class="label">Contact</h2>
+        <ul role="list">
+          <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          {social.map((s) => <li><a href={s.url} rel="me noopener">{s.label}</a></li>)}
+        </ul>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .wrap { display: grid; gap: var(--space-l); padding-block: var(--space-l); }
+  .title { font-size: var(--step-3); }
+  .lead { font-size: var(--step-1); }
+  .cols { display: grid; gap: var(--space-m); }
+  @media (min-width: 768px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: var(--prose-max); } }
+  .cols h2 { margin-bottom: var(--space-2xs); }
+  .cols a { display: inline-block; padding-block: 0.35em; }
+</style>

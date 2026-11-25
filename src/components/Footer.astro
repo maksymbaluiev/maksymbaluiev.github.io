@@ -1,0 +1,46 @@
+---
+import { SITE } from '../site.config';
+const social = SITE.social.filter((s) => s.url);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" id="contact">
+  <div class="container inner">
+    <div>
+      <p class="label">Contact</p>
+      <a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    </div>
+    {
+      social.length > 0 && (
+        <div>
+          <p class="label">Elsewhere</p>
+          <ul role="list" class="social">
+            {social.map((s) => (
+              <li><a href={s.url} rel="me noopener">{s.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+    <p class="label copy">© {year} {SITE.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-xl);
+    border-top: 1px solid var(--color-line);
+  }
+  .inner {
+    display: grid;
+    gap: var(--space-m);
+    padding-block: var(--space-m) var(--space-l);
+  }
+  @media (min-width: 768px) {
+    .inner { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+    .copy { justify-self: end; }
+  }
+  .email { font-size: var(--step-1); }
+  a { display: inline-block; padding-block: 0.35em; }
+  .social { display: flex; flex-wrap: wrap; gap: 0 var(--space-s); }
+</style>

@@ -1,0 +1,31 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import type { Project } from '../lib/projects';
+
+interface Props { projects: Project[] }
+const { projects } = Astro.props;
+---
+
+<ul role="list" class="grid">
+  {
+    projects.map((project, i) => (
+      <li>
+        <ProjectCard project={project} index={i} eager={i < 2} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  /* Колонки: 1 → 2 → 3 → 4 → 5 → 6. Картки не роздуваються на широких екранах. */
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-l) var(--grid-gap);
+  }
+  @media (min-width: 768px)  { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1280px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1920px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (min-width: 2880px) { .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  @media (min-width: 3600px) { .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+</style>

@@ -1,0 +1,55 @@
+---
+import { SITE } from '../site.config';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' || path.startsWith('/work/') : path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container inner">
+    <a class="name" href="/">{SITE.name}</a>
+    <nav aria-label="Main">
+      <ul role="list">
+        {
+          SITE.nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li><a href={`mailto:${SITE.email}`}>Email</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    min-height: calc(var(--tap-min) + var(--space-xs));
+    font-size: var(--step--1);
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    text-decoration: none;
+  }
+  .name { font-weight: var(--weight-medium); }
+  ul { display: flex; gap: var(--space-s); }
+  nav a { color: var(--color-text-muted); }
+  nav a:hover, nav a[aria-current='page'] { color: var(--color-text); }
+</style>

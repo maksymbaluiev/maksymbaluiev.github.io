@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" description="This page does not exist.">
+  <div class="container wrap">
+    <h1 class="title">Page not found</h1>
+    <p><a href="/">Back to work</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .wrap { display: grid; gap: var(--space-m); padding-block: var(--space-xl); }
+  .title { font-size: var(--step-3); }
+</style>
