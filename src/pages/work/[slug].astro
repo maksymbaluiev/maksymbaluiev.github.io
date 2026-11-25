@@ -72,8 +72,8 @@ const rows = [
         <a class="next next--side" href={`/work/${next.id}/`}><span class="label">Next</span> {next.data.title} →</a>
       )}
 
-      <!-- Десктоп: стрілка внизу лівої колонки, повертає на початок сторінки -->
-      <a class="to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+      <!-- Внизу лівої колонки праворуч: закриває проєкт і веде на головну -->
+      <a class="close-project" href="/">Close project <span aria-hidden="true">×</span></a>
     </aside>
 
     <!-- Права частина: картинки -->
@@ -178,8 +178,8 @@ const rows = [
   /* Телефон: сервіси під назвою */
   .head { display: grid; row-gap: var(--space-2xs); align-items: start; }
   .services { color: var(--color-text-muted); }
-  .next, .more a, .to-top { text-decoration: none; }
-  .next:hover, .more a:hover, .to-top:hover { color: var(--color-text-muted); }
+  .next, .more a, .close-project { text-decoration: none; }
+  .next:hover, .more a:hover, .close-project:hover { color: var(--color-text-muted); }
 
   .text { margin-top: var(--space-l); max-width: var(--prose-max); }
   .text :global(* + *) { margin-top: 1em; }
@@ -255,8 +255,15 @@ const rows = [
   @media (prefers-reduced-motion: reduce) { .lightbox[open] { animation: none; } }
   figure :global(img) { width: 100%; }
 
-  .to-top { display: none; text-decoration: none; }
-  .to-top:hover { color: var(--color-text-muted); }
+  /* «Close project ×»: телефон і планшет — у кінці текстового блоку праворуч */
+  .close-project {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.35em;
+    min-height: var(--tap-min);
+    margin-top: var(--space-m);
+  }
 
 
   /* Вужче 1024: текстовий блок на всю ширину сітки.
@@ -267,6 +274,7 @@ const rows = [
     .head { display: contents; }
     .info > *, .info h1 { grid-column: 1 / 3; }
     .info .services { grid-column: 4 / 5; grid-row: 1 / span 3; }
+    .info > .close-project { grid-column: 1 / -1; }
     .text { max-width: none; }
   }
   @media (max-width: 767px) {
@@ -291,12 +299,9 @@ const rows = [
       display: flex;
       flex-direction: column;
     }
-    /* «Back to top ↑» завжди внизу лівої колонки, праворуч */
-    .to-top {
+    /* Десктоп: «Close project ×» завжди внизу лівої колонки, праворуч */
+    .close-project {
       display: inline-flex;
-      align-items: center;
-      gap: 0.35em;
-      min-height: var(--tap-min);
       margin-top: auto;
       padding: var(--space-m) 0 0 var(--space-s);
       align-self: flex-end;
