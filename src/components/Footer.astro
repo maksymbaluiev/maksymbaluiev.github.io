@@ -11,13 +11,6 @@ const year = new Date().getFullYear();
     {social.map((s) => (
       <li><a href={s.url} target="_blank" rel="me noopener noreferrer">{s.label}</a></li>
     ))}
-    <!-- Меню стовпчиком на 4-му місці -->
-    <li class="menu">
-      <nav aria-label="Footer">
-        <a href="/">Home</a>
-        {SITE.nav.map((n) => <a href={n.href}>{n.label}</a>)}
-      </nav>
-    </li>
   </ul>
 </footer>
 
@@ -34,7 +27,7 @@ const year = new Date().getFullYear();
     row-gap: var(--space-3xs);
   }
   /*
-    Соцмережі (колонки 1, 3, 5) і меню стовпчиком (колонка 7), по лівому краю колонки.
+    Соцмережі: у колонках 1, 3, 5, по лівому краю колонки.
     ©/Privacy Policy: в останній колонці, по правому краю.
     Усе вирівняно по нижньому краю.
   */
@@ -45,13 +38,12 @@ const year = new Date().getFullYear();
   /* Планшет (4 колонки) — як на телефоні; десктоп: */
   @media (min-width: 1024px) {
     .legal { grid-row: 1; }
-    li:not(.legal) { grid-row: 1; grid-column: span 2; }   /* колонки 1, 3, 5, 7 */
+    li:not(.legal) { grid-row: 1; grid-column: span 2; }   /* колонки 1, 3, 5 */
   }
 
   /* Однаковий відступ у всіх пунктах, щоб нижні лінії тексту збігались */
   li { padding-block: 0.35em; }
   a { text-decoration: none; display: block; }
-  .menu a + a { margin-top: calc(0.7em + var(--space-3xs)); }   /* як між соцмережами на телефоні */
   /* Наведення: сірий, як у меню */
   a:hover { color: var(--color-text-muted); }
 </style>
