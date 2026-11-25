@@ -27,7 +27,7 @@ const year = new Date().getFullYear();
     row-gap: var(--space-3xs);
   }
   /*
-    Соцмережі: по одній у колонках 1–4, по лівому краю колонки.
+    Соцмережі: у колонках 1, 3, 5, 7, по лівому краю колонки.
     ©/Privacy Policy: в останній колонці, по правому краю.
     Усе вирівняно по нижньому краю.
   */
@@ -37,10 +37,7 @@ const year = new Date().getFullYear();
 
   @media (min-width: 768px) {
     .legal { grid-row: 1; }
-    li:not(.legal) { grid-row: 1; grid-column: span 2; }   /* планшет: колонки вузькі, тож по дві */
-  }
-  @media (min-width: 1024px) {
-    li:not(.legal) { grid-column: span 1; }                /* десктоп: колонки 1, 2, 3, 4 */
+    li:not(.legal) { grid-row: 1; grid-column: span 2; }   /* колонки 1, 3, 5, 7 */
   }
 
   /* Однаковий відступ у всіх пунктах, щоб нижні лінії тексту збігались */
