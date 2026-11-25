@@ -3,6 +3,8 @@ title: Black Daws
 summary: Logo, brand graphics, print and social media design for Black Daws, a Ukrainian women's ethno-group based in Zurich.
 services: [Branding, Graphic Design, Animation]
 order: 20
+# Ці картинки стоять по дві в ряд
+half: [03.gif, 04.gif, 12.jpg, 13.jpg]
 ---
 
 Black Daws is a Ukrainian women's ethno-group founded by migrants in Zurich. They perform traditional Ukrainian songs, blending authentic vocals with modern theatrical collaborations. Their performances build a cultural bridge between Ukraine and the world.

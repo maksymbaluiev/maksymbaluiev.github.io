@@ -25,6 +25,8 @@ const projects = defineCollection({
       coverAlt: z.string().optional(),
       // Підписи (alt) для картинок галереї за назвою файлу: { "01.jpg": "..." }
       alts: z.record(z.string(), z.string()).default({}),
+      // Картинки, які стоять по дві в ряд (на пів ширини): ["03.gif", "04.gif"]
+      half: z.array(z.string()).default([]),
       // Додаткові рядки в таблиці проєкту: [{ label: Client, value: ... }]
       credits: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
       // Посилання, напр. на завантаження шрифту. Перше показується біля назви.
