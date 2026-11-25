@@ -36,7 +36,8 @@ a:hover { color: var(--color-text-muted); }
   outline-offset: 3px;
 }
 
-h1, h2, h3 { font-weight: var(--weight-base); font-size: inherit; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+/* Один розмір тексту на весь сайт (--text-base), заголовки теж */
+h1, h2, h3 { font: inherit; }
 p, li { overflow-wrap: break-word; }
 ul[role='list'] { list-style: none; padding: 0; }
 
@@ -95,4 +96,5 @@ ul[role='list'] { list-style: none; padding: 0; }
   border-radius: 0.3em;
   background: var(--color-pill);
   line-height: 1;
+  white-space: nowrap;
 }

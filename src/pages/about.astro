@@ -58,45 +58,25 @@ const num = (name: string) => `${sections.indexOf(name) + 1}.`;
 </BaseLayout>
 
 <style>
-  /*
-    Сітка 14 колонок. Мітка і текст стоять в одному рядку сітки:
-    великий текст починається з відступом (text-indent) після мітки,
-    а наступні рядки йдуть на всю ширину свого блоку.
-  */
+  /* Сітка 14 колонок. Мітка і текст стоять в одному рядку сітки. */
   .sec { align-items: start; }
   .tag, .display, .body { grid-row: 1; }
 
-  .display {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-display);
-  }
-
-  /* 1. Profile: мітка в колонці 1, текст на всю ширину з відступом 5/14 */
+  /* Усі секції однаково: мітка з 6-ї колонки, текст з 9-ї */
+  .tag { grid-column: 6 / 9; }
+  .display, .body { grid-column: 9 / -1; max-width: var(--prose-max); }
+  .display { line-height: var(--leading-normal); }
   .sec--profile { padding-top: var(--space-xl); }
-  .sec--profile .tag { grid-column: 1 / 6; }
-  .sec--profile .display { grid-column: 1 / -1; text-indent: calc(100% * 5 / 14); }
-
-  /* 2. Approach: блок з колонки 6, перший рядок з колонки 9 */
-  .sec--approach { margin-top: 1.4vw; }
-  .sec--approach .tag { grid-column: 6 / 9; }
-  .sec--approach .display { grid-column: 6 / -1; text-indent: calc(100% * 3 / 9); }
-
-  /* 3. Info і Contact: мітка в колонці 6, списки з колонки 9 */
-  .sec--info { margin-top: max(var(--space-xl), 6.7vw); }
-  .sec--info .tag { grid-column: 6 / 9; }
-  .sec--info .body { grid-column: 9 / -1; }
+  .sec + .sec { margin-top: max(var(--space-l), 4vw); }
   .group + .group { margin-top: 0.35em; }
   dd { margin: 0; padding-left: 1em; max-width: 36em; }
   .body a { text-decoration: none; }
   .body a:hover { color: var(--color-text-muted); }
   ul.body li { line-height: 1.6; }
 
-  /* Телефон: менше колонок для відступів, щоб текст не стискався */
+  /* Телефон: мітка над текстом */
   @media (max-width: 767px) {
-    .sec--approach .tag, .sec--info .tag { grid-column: 1 / 6; }
-    .sec--approach .display { grid-column: 1 / -1; text-indent: calc(100% * 5 / 14); }
-    .sec--info .body { grid-column: 6 / -1; }
-    .sec--approach { margin-top: var(--space-l); }
+    .tag { grid-column: 1 / -1; }
+    .display, .body { grid-column: 1 / -1; grid-row: 2; margin-top: var(--space-2xs); }
   }
 </style>
