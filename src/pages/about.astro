@@ -94,7 +94,7 @@ const { profile, approach, services, clients } = SITE.about;
   ul.body li a { display: inline-block; padding-block: 0.2em; }
 
   /* Email: три стани в одній «комірці», щоб текст не стрибав */
-  .copy-email { display: inline-grid; cursor: pointer; }
+  ul.body li a.copy-email { display: inline-grid; justify-items: start; cursor: pointer; }
   .copy-email > span { grid-area: 1 / 1; transition: opacity 0.2s var(--ease); }
   .ce-hover, .ce-done { opacity: 0; }
   .copy-email:hover { color: inherit; }
