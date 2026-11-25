@@ -1,8 +1,8 @@
 // Загальні дані сайту. Міняй тут, а не у верстці.
 
 export const SITE = {
-  // TODO: заміни на свою адресу, коли буде репозиторій (напр. https://<логін>.github.io)
-  url: 'https://example.github.io',
+  // Адреса сайту. Якщо колись буде свій домен, міняй тут.
+  url: 'https://maksymbaluiev.github.io',
   name: 'Maksym Baluiev',
   lang: 'en',
   description:
