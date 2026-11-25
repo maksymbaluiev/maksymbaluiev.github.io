@@ -20,9 +20,13 @@ export async function getProjects(): Promise<Project[]> {
   return all.sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
 }
 
-export function getProjectImages(project: Project): ProjectImage[] {
+// Обкладинка для головної: файл, назва якого починається з «cover» (напр. «Cover for main.jpg»).
+// Вона не показується в галереї проєкту. Якщо такого файлу немає, обкладинкою стає перша картинка.
+const isCoverFile = (file: string) => /^cover/i.test(file);
+
+function ownImages(project: Project): ProjectImage[] {
   const prefix = `/src/content/projects/${project.id}/`;
-  const own = Object.entries(files)
+  return Object.entries(files)
     .filter(([path]) => path.startsWith(prefix))
     .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
     .map(([path, mod], i) => {
@@ -33,7 +37,9 @@ export function getProjectImages(project: Project): ProjectImage[] {
         alt: project.data.alts[file] ?? `${project.data.title}, image ${i + 1}`,
       };
     });
-  if (own.length) return own;
+}
+
+function placeholderImages(project: Project): ProjectImage[] {
   return placeholders.map((src, i) => ({
     src,
     file: `placeholder-${i + 1}`,
@@ -41,14 +47,21 @@ export function getProjectImages(project: Project): ProjectImage[] {
   }));
 }
 
+/** Картинки для сторінки проєкту (без окремої обкладинки) */
+export function getProjectImages(project: Project): ProjectImage[] {
+  const own = ownImages(project);
+  const gallery = own.filter((img) => !isCoverFile(img.file));
+  if (gallery.length) return gallery;
+  if (own.length) return own; // є лише обкладинка: показуємо її
+  return placeholderImages(project);
+}
+
+/** Обкладинка для головної */
 export function getCover(project: Project): ProjectImage {
   if (project.data.cover) {
-    return {
-      src: project.data.cover,
-      file: 'cover',
-      alt: project.data.coverAlt ?? project.data.title,
-    };
+    return { src: project.data.cover, file: 'cover', alt: project.data.coverAlt ?? project.data.title };
   }
-  const [first] = getProjectImages(project);
-  return { ...first, alt: project.data.coverAlt ?? first.alt };
+  const own = ownImages(project);
+  const pick = own.find((img) => isCoverFile(img.file)) ?? own[0] ?? placeholderImages(project)[0];
+  return { ...pick, alt: project.data.coverAlt ?? project.data.alts[pick.file] ?? project.data.title };
 }
