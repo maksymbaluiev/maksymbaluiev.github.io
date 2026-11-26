@@ -1,13 +1,6 @@
 /* Дизайн-токени. Редизайн починається тут. */
 :root {
-  /* Кольори */
-  --color-bg: #000;
-  --color-surface: #141414;
-  --color-text: #fff;
-  --color-text-muted: #808080; /* сірий: підписи, наведення, активний пункт (контраст 5.3:1) */
-  --color-line: #2a2a2a;
-  --color-accent: #f2f2f2;
-  --color-focus: #8ab4ff;
+  /* Кольори: див. палітри нижче. Яка діє — задано в SITE.palette (src/site.config.ts) */
 
   /* Шрифти */
   /* Основний шрифт. Варіанти, що вже підключені (fonts.css):
@@ -62,4 +55,30 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root { --duration: 0ms; }
+}
+
+/*
+  Палітри. Перемикач: palette у src/site.config.ts ('dark' або 'yellow').
+*/
+:root[data-palette='dark'] {
+  --color-bg: #000;
+  --color-surface: #141414;
+  --color-text: #fff;
+  --color-text-muted: #808080; /* сірий: підписи, наведення, активний пункт (контраст 5.3:1) */
+  --color-line: #2a2a2a;
+  --color-accent: #f2f2f2;
+  --color-focus: #8ab4ff;
+  --color-overlay: rgba(0, 0, 0, 0.72);   /* фон мобільного меню */
+  --color-backdrop: rgba(0, 0, 0, 0.92);  /* фон попапу з картинкою */
+}
+:root[data-palette='yellow'] {
+  --color-bg: #fffd52;
+  --color-surface: #eaeaeb;
+  --color-text: #383838;
+  --color-text-muted: #6b6b6b; /* темніший сірий, щоб читався на жовтому (контраст ~5:1) */
+  --color-line: rgba(56, 56, 56, 0.15);
+  --color-accent: #383838;
+  --color-focus: #2b5cff;
+  --color-overlay: rgba(255, 253, 82, 0.85);
+  --color-backdrop: rgba(255, 253, 82, 0.96);
 }

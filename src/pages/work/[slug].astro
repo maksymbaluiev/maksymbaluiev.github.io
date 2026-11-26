@@ -226,7 +226,7 @@ const rows = [
     cursor: zoom-out;
   }
   .lightbox[open] { display: grid; place-items: center; animation: lb-in 0.25s var(--ease); }
-  .lightbox::backdrop { background: rgba(0, 0, 0, 0.92); }
+  .lightbox::backdrop { background: var(--color-backdrop); }
   .lb-img {
     max-width: 100%;
     max-height: calc(100dvh - 2 * var(--pad));
