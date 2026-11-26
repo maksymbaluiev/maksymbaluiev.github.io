@@ -89,7 +89,7 @@
   --color-bg: #fff;
   --color-surface: #eaeaeb;
   --color-text: #383838;
-  --color-text-muted: #949494; /* світліший сірий: помітно відрізняється від тексту, на білому контраст 3:1 */
+  --color-text-muted: #b0b0b0; /* світлий сірий для підписів і наведення (на білому контраст ~2.1:1) */
   --color-line: rgba(56, 56, 56, 0.15);
   --color-accent: #383838;
   --color-focus: #2b5cff;
