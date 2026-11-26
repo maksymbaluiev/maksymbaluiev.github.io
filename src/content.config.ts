@@ -27,6 +27,8 @@ const projects = defineCollection({
       alts: z.record(z.string(), z.string()).default({}),
       // Картинки, які стоять по дві в ряд (на пів ширини): ["03.gif", "04.gif"]
       half: z.array(z.string()).default([]),
+      // false = пари не обрізаються до квадрата, лишається оригінальне співвідношення
+      halfCrop: z.boolean().default(true),
       // Текст між картинками: стоїть після вказаного файлу. { "04.jpg": "Абзац тексту" }
       textAfter: z.record(z.string(), z.string()).default({}),
       // Додаткові рядки в таблиці проєкту: [{ label: Client, value: ... }]
