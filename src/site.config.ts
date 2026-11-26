@@ -4,10 +4,10 @@ export const SITE = {
   // Адреса сайту. Якщо колись буде свій домен, міняй тут.
   url: 'https://maksymbaluiev.github.io',
   name: 'Maksym Baluiev',
-  // Палітра сайту: 'dark' (чорна) або 'yellow' (жовта). Кольори — у src/styles/tokens.css
-  palette: 'yellow' as 'dark' | 'yellow',
+  // Палітра сайту: 'dark' (чорна), 'yellow' (жовта) або 'white' (біла). Кольори — у src/styles/tokens.css
+  palette: 'white' as 'dark' | 'yellow' | 'white',
   // Сірі плашки під текстовими блоками (src/styles/plates.css). false — вимкнути
-  plates: true,
+  plates: false,
   lang: 'en',
   description:
     'Designer from Kyiv, based in Zurich. Brand identity, graphic design, motion, 3D, packaging and illustration.',

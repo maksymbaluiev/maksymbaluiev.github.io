@@ -58,7 +58,7 @@
 }
 
 /*
-  Палітри. Перемикач: palette у src/site.config.ts ('dark' або 'yellow').
+  Палітри. Перемикач: palette у src/site.config.ts ('dark', 'yellow' або 'white').
 */
 :root[data-palette='dark'] {
   --color-bg: #000;
@@ -72,6 +72,7 @@
   --color-backdrop: rgba(0, 0, 0, 0.92);  /* фон попапу з картинкою */
 }
 :root[data-palette='yellow'] {
+  --scheme: light;
   --color-bg: #fffd52;
   --color-surface: #eaeaeb;
   --color-text: #383838;
@@ -81,4 +82,17 @@
   --color-focus: #2b5cff;
   --color-overlay: rgba(255, 253, 82, 0.85);
   --color-backdrop: rgba(255, 253, 82, 0.96);
+}
+
+:root[data-palette='white'] {
+  --scheme: light;
+  --color-bg: #fff;
+  --color-surface: #eaeaeb;
+  --color-text: #383838;
+  --color-text-muted: #737373; /* сірий, що читається на білому (контраст ~4.7:1) */
+  --color-line: rgba(56, 56, 56, 0.15);
+  --color-accent: #383838;
+  --color-focus: #2b5cff;
+  --color-overlay: rgba(255, 255, 255, 0.85);
+  --color-backdrop: rgba(255, 255, 255, 0.96);
 }
