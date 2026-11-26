@@ -6,6 +6,8 @@ export const SITE = {
   name: 'Maksym Baluiev',
   // Палітра сайту: 'dark' (чорна) або 'yellow' (жовта). Кольори — у src/styles/tokens.css
   palette: 'yellow' as 'dark' | 'yellow',
+  // Сірі плашки під текстовими блоками (src/styles/plates.css). false — вимкнути
+  plates: true,
   lang: 'en',
   description:
     'Designer from Kyiv, based in Zurich. Brand identity, graphic design, motion, 3D, packaging and illustration.',

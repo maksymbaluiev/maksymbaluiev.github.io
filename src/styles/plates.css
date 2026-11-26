@@ -1,0 +1,52 @@
+/*
+  Сірі плашки під текстовими блоками (як на скриншоті Максима).
+  Вмикаються в src/site.config.ts: plates: true.
+  Однаковий відступ з усіх боків — --plate-pad. Колір — --color-surface.
+*/
+:root[data-plates] {
+  --plate-pad: 0.45em;
+}
+
+:root[data-plates] :is(
+  /* шапка */
+  .site-header .name,
+  .site-header .toggle,
+  .site-header .nav a,
+  .site-header .locations,
+  .site-header .services,
+  /* підписи карток на головній */
+  .card .title,
+  /* сторінка проєкту */
+  .project .head h1,
+  .project .head .services,
+  .project .text,
+  .project .rows,
+  .project .more,
+  .project .close-project,
+  .project .between,
+  /* About і Blog */
+  main .tag,
+  main .body,
+  main .prose,
+  /* підвал */
+  .site-footer li
+) {
+  background: var(--color-surface);
+  padding: var(--plate-pad);
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  border-radius: var(--radius);
+}
+
+/* Шапка: відступ від верху екрана, однаковий для всіх плашок */
+:root[data-plates] .site-header { padding-top: var(--space-xs); }
+@media (min-width: 1024px) {
+  :root[data-plates] .site-header :is(.name, .nav a) { height: fit-content; }
+}
+/* Мобільне меню: плашки одна під одною з проміжком */
+:root[data-plates] .site-header .nav { gap: var(--space-3xs); }
+:root[data-plates] .site-header .toggle { width: auto; height: auto; margin-right: 0; font-size: 1em; font-weight: inherit; line-height: inherit; align-self: center; }   /* того ж розміру, що й плашка з іменем */
+
+/* Підпис картки: невеликий проміжок до картинки */
+:root[data-plates] .card .title { margin-bottom: var(--space-2xs); }

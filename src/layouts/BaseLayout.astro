@@ -19,7 +19,7 @@ const ogImage = new URL(image, Astro.site);
 ---
 
 <!doctype html>
-<html lang={SITE.lang} data-palette={SITE.palette}>
+<html lang={SITE.lang} data-palette={SITE.palette} data-plates={SITE.plates ? '' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
