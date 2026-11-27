@@ -15,4 +15,4 @@ half: [02.jpg, 03.jpg, 05.jpg, 06.mp4]
 
 <a href="https://kyiv-tech-summit.devpost.com/" target="_blank" rel="noopener">Kyiv Tech Summit</a> is a hybrid Web3 hackathon in Kyiv where developers build technology to help Ukraine.
 
-The identity is built on a modular grid of dots and circles, a nod to decentralized networks where many small nodes form one whole. It is combined with grainy black-and-white photos of Kyiv and a bright lime and magenta palette that keeps the event loud, digital and young.
+The identity follows the summit's three stages. Lectures are a ring of separate dots, the hackathon joins them into a solid ring, and the conclusion fills it into one circle: scattered ideas turning into a finished result. Each stage gets its own bright color block, and together with the bold monospaced wordmark they stack into a modular logo.
