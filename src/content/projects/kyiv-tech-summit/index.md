@@ -5,9 +5,9 @@ summary: Brand identity and graphic design for Kyiv Tech Summit, a hybrid Web3 h
 services: [Brand Identity, Graphic Design]
 # Перший на головній
 order: 5
-# Пари без обрізання до квадрата (пари 06+07 і 08+09, усі 3:4)
+# Пари без обрізання до квадрата (07 і відео 08 обидва 3:4)
 halfCrop: false
-half: [02.jpg, 03.jpg, 06.png, 07.jpg, 08.jpg, 09.mp4]
+half: [02.jpg, 03.jpg, 07.jpg, 08.mp4]
 ---
 
 <a href="https://kyiv-tech-summit.devpost.com/" target="_blank" rel="noopener">Kyiv Tech Summit</a> is a hybrid Web3 hackathon in Kyiv where developers build technology to help Ukraine.
