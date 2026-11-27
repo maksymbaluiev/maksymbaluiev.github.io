@@ -25,7 +25,7 @@ const large = await Promise.all(
   ),
 );
 const og = await getImage({ src: getCover(project).src, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
-const { title, summary, services, year, links, credits, half, halfCrop, textAfter } = project.data;
+const { title, summary, services, year, links, credits, half, halfCrop, crop, textAfter } = project.data;
 
 // Таблиця під описом: номер · назва · значення (сервіси тепер біля назви)
 const rows = [
@@ -82,7 +82,7 @@ const rows = [
             <video src={img.video} autoplay muted loop playsinline preload="metadata" aria-label={img.alt}></video>
           </figure>
         ) : (
-        <figure class:list={[{ half: half.includes(img.file) }]}>
+        <figure class:list={[{ half: half.includes(img.file), cropped: !!crop[img.file] }]} style={crop[img.file] ? `--crop: ${crop[img.file]}` : undefined}>
           <button class="zoom" type="button" data-index={i} data-large={large[i]} aria-label={`Open image ${i + 1} larger`}>
           {img.src.format === 'gif' ? (
             /* GIF показуємо як є, щоб не зламати анімацію */
@@ -209,6 +209,7 @@ const rows = [
   .media figure.half :global(picture) { display: block; }
   .media figure.half :global(img) { aspect-ratio: 1 / 1; height: auto; object-fit: cover; }
   .media.keep-ratio figure.half :global(img) { aspect-ratio: auto; }
+  .media figure.cropped :global(img), .media.keep-ratio figure.cropped :global(img) { aspect-ratio: var(--crop); height: auto; object-fit: cover; }
   figure { background: var(--color-surface); }
   .zoom { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
 

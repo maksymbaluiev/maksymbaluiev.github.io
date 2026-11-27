@@ -29,6 +29,8 @@ const projects = defineCollection({
       half: z.array(z.string()).default([]),
       // false = пари не обрізаються до квадрата, лишається оригінальне співвідношення
       halfCrop: z.boolean().default(true),
+      // Обрізати картинку на сторінці під пропорцію (оригінал не змінюється): { "05.jpg": "950 / 1192" }
+      crop: z.record(z.string(), z.string()).default({}),
       // Текст між картинками: стоїть після вказаного файлу. { "04.jpg": "Абзац тексту" }
       textAfter: z.record(z.string(), z.string()).default({}),
       // Додаткові рядки в таблиці проєкту: [{ label: Client, value: ... }]
